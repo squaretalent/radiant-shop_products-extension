@@ -115,12 +115,9 @@ body
           :size           = !line_height
         
       #shop_product_category_delete
-        :float              left
-        :display            block
-        :width              18%
-        :height           = !line_height*1.5
-        :line
-          :height         = !line_height*2
+        :float              right
+        :margin
+          :top            = !line_height*0.5
         :font
           :size             12px
           :weight           bold
@@ -133,6 +130,39 @@ body
         &:hover
           :text
             :decoration     underline
+    
+    #shop_product_inputs
+      :margin             = !line_height*0.5
+      
+      #shop_product_inputs_main
+        :overflow           hidden
+      
+      #shop_product_name
+        :float              left
+        :height           = !line_height*1.25
+        :width              82%
+        :font
+          :size             = !line_height*0.75
+        
+      #shop_product_currency
+        :display            block
+        :float              left
+        :height           = !line_height*1.25
+        :line
+          :height         = !line_height*1.5
+        :width              4%
+        :font
+          :size           = !line_height
+          :weight           bold
+        :text
+          :align            right
+      
+      #shop_product_cost
+        :float              right
+        :height           = !line_height*1.25      
+        :width              12%
+        :font
+          :size           = !line_height*0.75
             
     #shop_product_details
       :margin             = !line_height*0.5
