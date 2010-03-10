@@ -27,8 +27,7 @@
   
     #shop_product_category
       %input#shop_product_category_title.textbox{:value => "Guys"}
-      %a#shop_product_category_delete{:href => "#"} delete
-      
+
     #shop_product
       #shop_product_inputs
         #shop_product_inputs_main
@@ -36,14 +35,14 @@
           %span#shop_product_currency $
           %input#shop_product_cost{:value => "69.69"}
           
-        #shop_product_fields{:style=>"display: none"}
-          %table.fieldset
-            %tr
-              %th.label
-                %label{:for=>"page_slug"} handle
-              %td.field
-                %input#shop_product_handle{:value => "retro_fun_t-shirt"}
-              %td.actions
+          #shop_product_fields{:style=>"display: none"}
+            %table.fieldset
+              %tr
+                %th.label
+                  %label{:for=>"page_slug"} handle
+                %td.field
+                  %input#shop_product_handle{:value => "retro_fun_t-shirt"}
+                %td.actions
         %p.more_or_less
           %a{:id=>"more_shop_product_fields", :href=>"javascript: $('shop_product_fields').show(); $('less_shop_product_fields').show(); $('more_shop_product_fields').hide(); this.stop()"} More
           %a{:id=>"less_shop_product_fields", :href=>"javascript: $('shop_product_fields').hide(); $('more_shop_product_fields').show(); $('less_shop_product_fields').hide(); this.stop()", :style=>"display: none"} Hide

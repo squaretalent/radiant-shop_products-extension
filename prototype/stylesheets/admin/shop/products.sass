@@ -1,14 +1,17 @@
+@import ../modules/rounded.sass
+
 !line_height              = 18px
 
 !white                    = #ffffff
 !black                    = #121212
 !grey                     = #e6e6e6
-!grey_dark                = #acacac
+!grey_dark                = #7e7e7e
 !blue                     = #b3e6ff
 !blue_light               = #d9f3ff
 !blue_dark                = #366c92
 !green                    = #58824e
 !red                      = #cc0000
+!tan                      = #cac8c0
 
 body
   :background
@@ -109,7 +112,7 @@ body
     
       #shop_product_category_title
         :float              left
-        :width              80%
+        :width              100%
         :height           = !line_height*1.5
         :font
           :size           = !line_height
@@ -136,11 +139,14 @@ body
       
       #shop_product_inputs_main
         :overflow           hidden
+        :padding          = !line_height*0.5
+        :background
+          :color          = !tan
       
       #shop_product_name
         :float              left
         :height           = !line_height*1.25
-        :width              82%
+        :width              80%
         :font
           :size             = !line_height*0.75
         
@@ -150,7 +156,7 @@ body
         :height           = !line_height*1.25
         :line
           :height         = !line_height*1.5
-        :width              4%
+        :width              5%
         :font
           :size           = !line_height
           :weight           bold
@@ -163,6 +169,58 @@ body
         :width              12%
         :font
           :size           = !line_height*0.75
+          
+      #shop_product_fields
+        :padding
+          :top            = !line_height*2
+      
+        table
+          :width            100%
+          
+          .label
+            :width          50px
+            :height       = !line_height*1.5
+            :line
+              :height     = !line_height*1.5
+           
+          .field
+            :padding
+              :right        7px
+              :height     = !line_height*1.5
+                        
+            input
+              :width        100%
+              :height     = !line_height
+          
+      .more_or_less
+        :margin             0 0 1em
+        :padding            4px 0 5px
+        :font
+          :size             80%
+        
+        a
+          +round-bottom-corners(6px)
+          :color          = !black
+          :border
+            :bottom
+              :left
+                :radius     6px
+              :right
+                :radius     6px
+          :text
+            :decoration     none
+          :padding          4px 21px 5px 10px
+          :position         relative
+          :top              -1px
+          
+          &:hover, &:active, &:focus
+            :text
+              :decoration   underline
+              
+        #more_shop_product_fields
+          :background     = "#{!tan} url(/images/admin/shop/product_fields_toggle.png) no-repeat 90% 8px"
+        #less_shop_product_fields
+          :background     = "#{!tan} url(/images/admin/shop/product_fields_toggle.png) no-repeat 85% -22px"
             
     #shop_product_details
       :margin             = !line_height*0.5
@@ -179,7 +237,7 @@ body
           :margin
             :right        = !line_height*0.25
           :background
-            :color          #cac8c0
+            :color        = !tan
           :color            #7f7f7f
           :display          inline-block
           :text
