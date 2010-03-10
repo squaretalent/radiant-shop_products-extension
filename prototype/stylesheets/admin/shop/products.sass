@@ -1,0 +1,224 @@
+!line_height              = 18px
+
+!white                    = #ffffff
+!black                    = #121212
+!grey                     = #e6e6e6
+!grey_dark                = #acacac
+!blue                     = #b3e6ff
+!blue_light               = #d9f3ff
+!blue_dark                = #366c92
+!green                    = #58824e
+!red                      = #cc0000
+
+body
+  :background
+    :color                = !blue
+
+#content
+  :position                 relative
+  :overflow                 hidden
+  :width                    100%
+  :min
+    :height                 100%
+  :padding                  0
+
+#shop_products
+  :float                    left
+  :width                    61%
+  :padding                  2%
+    
+  #shop_product_categories_list
+    :width                  15%
+    :float                  left    
+    :margin
+      :top                = !line_height*0.5
+      :bottom             = !line_height
+      
+    li.category
+      :margin
+        :bottom             2px
+        :top                2px
+      :line
+        :height           = !line_height
+      :text
+        :align              right
+      :font
+        :size             = !line_height*0.75
+      :border
+        :color            = !black
+        :width              2px
+        :style              solid
+      :background
+        :color            = !white
+        
+      a
+        :display            block
+        :white
+          :space            pre
+        :padding          = !line_height*0.5
+        :color            = !grey_dark
+        :text
+          :decoration       none
+          
+        &:hover
+          :color          = !black
+        
+      &.current
+        :background
+          :color          = !grey
+          
+        a
+          :color          = !black
+          :font
+            :weight         bold
+          
+      &.new
+        :background
+          :color          = !green
+          
+        a
+          :color          = !white
+          :font
+            :weight         bold
+    
+  #shop_product_container
+    :width                  85%
+    :min  
+      :height               200px
+    :float                  left    
+    :margin
+      :top                = !line_height*0.5
+      :bottom             = !line_height
+    :background
+      :color              = !grey
+    :outline
+      :color              = !black
+      :width                2px
+      :style                solid
+
+    #shop_product_category 
+      :overflow             hidden
+      :margin             = !line_height*0.5
+      :padding
+        :bottom           = !line_height*0.5
+      :border
+        :bottom
+          :width            1px
+          :color          = !grey_dark
+          :style            solid
+    
+      #shop_product_category_title
+        :float              left
+        :width              80%
+        :height           = !line_height*1.5
+        :font
+          :size           = !line_height
+        
+      #shop_product_category_delete
+        :float              left
+        :display            block
+        :width              18%
+        :height           = !line_height*1.5
+        :line
+          :height         = !line_height*2
+        :font
+          :size             12px
+          :weight           bold
+        :text
+          :align            right
+        :color            = !red
+        :text
+          :decoration       none
+          
+        &:hover
+          :text
+            :decoration     underline
+            
+    #shop_product_details
+      :margin             = !line_height*0.5
+      :color                #333
+      
+      .tabs
+        :float              left
+        :width              100%
+        :margin
+          :right            -4px
+        
+        .tab
+          :padding        = !line_height*0.4 !line_height*0.5
+          :margin
+            :right        = !line_height*0.25
+          :background
+            :color          #cac8c0
+          :color            #7f7f7f
+          :display          inline-block
+          :text
+            :decoration     none
+
+          &.here
+            :background
+              :color      = !white
+            :color        = !black
+            :font
+              :weight       bold
+        
+          span:hover
+            :color        = !black
+            
+          .close
+            :display        none
+            
+      .details
+        :background
+          :color          = !white
+        :width              100%
+        :clear              both
+        
+        .detail
+          :padding          20px 24px 20px 20px
+        
+          textarea
+            :max
+              :width        100%
+
+#shop_products_alt
+  :float                    left
+  :width                    31%
+  :height                   100%
+  :padding                  2%
+  :background
+    :color                = !blue_light
+    
+  #shop_products_list
+    :margin
+      :top                = !line_height*0.5
+    :border
+      :color                transparent
+      :width                2px
+      :style                solid
+    
+    li.product
+      :line
+        :height           = !line_height*1.5
+      :text
+        :indent           = !line_height*1.5
+
+      &:hover
+        :background
+          :color          = !blue
+
+      a
+        :display            block
+        :padding          = !line_height*0.5
+        :color            = !blue_dark
+        :text
+          :decoration       none        
+                
+      &.current
+        :background
+          :color          = !blue_dark
+          
+        a
+          :color          = !blue_light
+          :text
+            :decoration     none

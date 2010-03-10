@@ -1,0 +1,80 @@
+- @selected = :products
+- @title = 'Products - Radiant CMS - Publishing for Small Teams'
+- content_for :meta do 
+  = render :partial => 'head'
+  
+#shop_products
+
+  %h2 Categories
+  %p Products within your shop are organised in categories
+  
+  %ul#shop_product_categories_list
+    %li.category#shop_product_category_guys{:class => 'current'}
+      %span.title 
+        = link_to_function 'Guys', "select_shop_product_category()", :href => '/shop/products/categories/guys'
+    %li.category#shop_product_category_guys
+      %span.title        
+        = link_to_function 'Gals', "select_shop_product_category()", :href => '/shop/products/categories/gals'
+    %li.category#shop_product_category_guys
+      %span.title        
+        = link_to_function 'Kids', "select_shop_product_category()", :href => '/shop/products/categories/kids'
+    %li.new.category
+      %span.title        
+        = link_to_function 'Create', "create_shop_product_category()", :href => '/shop/products/categories/kids'
+  
+  
+  #shop_product_container
+  
+    #shop_product_category
+      %input#shop_product_category_title.textbox{:value => "Guys"}
+      %a#shop_product_category_delete{:href => "#"} delete
+      
+    #shop_product
+      #shop_product_inputs
+        #shop_product_inputs_main
+          %input#shop_product_name{:value => "Retro Fun T-Shirt"}
+          %span#shop_product_currency $
+          %input#shop_product_cost{:value => "69.69"}
+          
+        #shop_product_fields{:style=>"display: none"}
+          %table.fieldset
+            %tr
+              %th.label
+                %label{:for=>"page_slug"} handle
+              %td.field
+                %input#shop_product_handle{:value => "retro_fun_t-shirt"}
+              %td.actions
+        %p.more_or_less
+          %a{:id=>"more_shop_product_fields", :href=>"javascript: $('shop_product_fields').show(); $('less_shop_product_fields').show(); $('more_shop_product_fields').hide(); this.stop()"} More
+          %a{:id=>"less_shop_product_fields", :href=>"javascript: $('shop_product_fields').hide(); $('more_shop_product_fields').show(); $('less_shop_product_fields').hide(); this.stop()", :style=>"display: none"} Hide
+
+      #shop_product_details
+        .tabs
+        .details
+          .detail.page{'data-caption'=>"images"}
+            %input#part_0_name{:name=>"part[0][name]", :type=>"hidden", :value=>"images"}/
+            %div
+              images here
+          .detail.page{'data-caption'=>"description"}
+            %input#part_1_name{:name=>"part[1][name]", :type=>"hidden", :value=>"description"}/
+            %div
+              %textarea.large#part_1_content{:name=>"part[1][content]", :style=>"width: 100%"}=""
+
+      %input#shop_product_submit{:type => "submit"}
+      %a#shop_product_delete{:href => "#"} delete
+        
+#shop_products_alt
+
+  %h2 Products
+  %p These are all the products you have for sale
+  
+  %ul#shop_products_list
+    %li.product#shop_product-retro_fun{:class => 'current'}
+      %span.title
+        = link_to_function 'Retro Fun T-Shirt', "select_shop_product()", :href => '/shop/products/retro_fun'
+    %li.product#shop_product-retro_boring
+      %span.title
+        = link_to_function 'Retro Bording T-Shirt', "select_shop_product()", :href => '/shop/products/retro_boring'
+    %li.product#shop_product-retro_insane
+      %span.title
+        = link_to_function 'Retro Insane T-Shirt', "select_shop_product()", :href => '/shop/products/retro_insane'
