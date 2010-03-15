@@ -15,7 +15,7 @@
 
 body
   :background
-    :color                = !blue
+    :color                = !blue_light
 
 #content
   :position                 relative
@@ -51,6 +51,7 @@ body
         :color            = !black
         :width              2px
         :style              solid
+        :right              0
       :background
         :color            = !white
         
@@ -85,7 +86,7 @@ body
             :weight         bold
     
   #shop_product_container
-    :width                  85%
+    :width                  84%
     :min  
       :height               200px
     :float                  left    
@@ -94,7 +95,7 @@ body
       :bottom             = !line_height
     :background
       :color              = !grey
-    :outline
+    :border
       :color              = !black
       :width                2px
       :style                solid
@@ -155,7 +156,7 @@ body
         :float              left
         :height           = !line_height*1.25
         :line
-          :height         = !line_height*1.5
+          :height         = !line_height*1.75
         :width              5%
         :font
           :size           = !line_height
@@ -233,6 +234,7 @@ body
           :right            -4px
         
         .tab
+          +round-top-corners(4px)
           :padding        = !line_height*0.4 !line_height*0.5
           :margin
             :right        = !line_height*0.25
@@ -274,15 +276,13 @@ body
   :width                    31%
   :height                   100%
   :padding                  2%
-  :background
-    :color                = !blue_light
     
   #shop_products_list
     :margin
-      :top                = !line_height*0.5
+      :top                = !line_height
     :border
       :color                transparent
-      :width                2px
+      :width                4px
       :style                solid
     
     li.product
