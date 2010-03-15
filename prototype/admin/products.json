@@ -1,0 +1,4 @@
+[
+  {"id":1,"price":"11.11","sku":"one","handle":"one","title":"one","description":"one description","category":{"title":"category"}},
+  {"id":2,"price":"11.11","sku":"two","handle":"one","title":"two","description":"two description","category":{"title":"category"}}
+]

@@ -11,56 +11,56 @@
   %ul#shop_product_categories_list
     %li.category#shop_product_category_guys{:class => 'current'}
       %span.title 
-        = link_to_function 'Guys', "select_shop_product_category()", :href => '/shop/products/categories/guys'
+        = link_to 'Guys', '/shop/products/categories/guys'
     %li.category#shop_product_category_guys
       %span.title        
-        = link_to_function 'Gals', "select_shop_product_category()", :href => '/shop/products/categories/gals'
+        = link_to 'Gals', '/shop/products/categories/gals'
     %li.category#shop_product_category_guys
       %span.title        
-        = link_to_function 'Kids', "select_shop_product_category()", :href => '/shop/products/categories/kids'
+        = link_to 'Kids', '/shop/products/categories/kids'
     %li.new.category
       %span.title        
-        = link_to_function 'Create', "create_shop_product_category()", :href => '/shop/products/categories/kids'
+        = link_to 'Create', '/shop/products/categories/kids', :class => 'new'
   
   
   #shop_product_container
-  
-    #shop_product_category
-      %input#shop_product_category_title.textbox{:value => "Guys"}
+    %form
+      #shop_product_category
+        %input#shop_product_category_title.textbox{:value => "Guys"}
 
-    #shop_product
-      #shop_product_inputs
-        #shop_product_inputs_main
-          %input#shop_product_name{:value => "Retro Fun T-Shirt"}
-          %span#shop_product_currency $
-          %input#shop_product_cost{:value => "69.69"}
+      #shop_product
+        #shop_product_inputs
+          #shop_product_inputs_main
+            %input#shop_product_name{:name => 'product[title]', :value => "Retro Fun T-Shirt"}
+            %span#shop_product_currency $
+            %input#shop_product_cost{:name => 'product[price]', :value => "69.69"}
           
-          #shop_product_fields{:style=>"display: none"}
-            %table.fieldset
-              %tr
-                %th.label
-                  %label{:for=>"page_slug"} handle
-                %td.field
-                  %input#shop_product_handle{:value => "retro_fun_t-shirt"}
-                %td.actions
-        %p.more_or_less
-          %a{:id=>"more_shop_product_fields", :href=>"javascript: $('shop_product_fields').show(); $('less_shop_product_fields').show(); $('more_shop_product_fields').hide(); this.stop()"} More
-          %a{:id=>"less_shop_product_fields", :href=>"javascript: $('shop_product_fields').hide(); $('more_shop_product_fields').show(); $('less_shop_product_fields').hide(); this.stop()", :style=>"display: none"} Hide
+            #shop_product_fields{:style=>"display: none"}
+              %table.fieldset
+                %tr
+                  %th.label
+                    %label{:for=>"page_slug"} handle
+                  %td.field
+                    %input#shop_product_handle{:value => "retro_fun_t-shirt"}
+                  %td.actions
+          %p.more_or_less
+            %a{:id=>"more_shop_product_fields", :href=>"javascript: $('shop_product_fields').show(); $('less_shop_product_fields').show(); $('more_shop_product_fields').hide(); this.stop()"} More
+            %a{:id=>"less_shop_product_fields", :href=>"javascript: $('shop_product_fields').hide(); $('more_shop_product_fields').show(); $('less_shop_product_fields').hide(); this.stop()", :style=>"display: none"} Hide
 
-      #shop_product_details
-        .tabs
-        .details
-          .detail.page{'data-caption'=>"images"}
-            %input#part_0_name{:name=>"part[0][name]", :type=>"hidden", :value=>"images"}/
-            %div
-              images here
-          .detail.page{'data-caption'=>"description"}
-            %input#part_1_name{:name=>"part[1][name]", :type=>"hidden", :value=>"description"}/
-            %div
-              %textarea.large#part_1_content{:name=>"part[1][content]", :style=>"width: 100%"}=""
-
-      %input#shop_product_submit{:type => "submit"}
-      %a#shop_product_delete{:href => "#"} delete
+        #shop_product_details
+          .tabs
+          .details
+            .detail.page{'data-caption'=>"images"}
+              %div
+                images here
+              %input{:type=>"hidden",:name=>"product[images][0]"}
+            .detail.page{'data-caption'=>"description"}
+              %div
+                %textarea.large#shop_product_description{:name=>"product[description]", :style=>"width: 100%"}=""
+      
+        #shop_product_actions
+          %input#shop_product_submit{:type => "submit"}
+          %a#shop_product_delete{:href => "#"} delete
         
 #shop_products_alt
 
@@ -70,10 +70,10 @@
   %ul#shop_products_list
     %li.product#shop_product-retro_fun{:class => 'current'}
       %span.title
-        = link_to_function 'Retro Fun T-Shirt', "select_shop_product()", :href => '/shop/products/retro_fun'
+        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun'
     %li.product#shop_product-retro_boring
       %span.title
-        = link_to_function 'Retro Bording T-Shirt', "select_shop_product()", :href => '/shop/products/retro_boring'
+        = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring'
     %li.product#shop_product-retro_insane
       %span.title
-        = link_to_function 'Retro Insane T-Shirt', "select_shop_product()", :href => '/shop/products/retro_insane'
+        = link_to 'Retro Insane T-Shirt', '/shop/products/retro_insane'
