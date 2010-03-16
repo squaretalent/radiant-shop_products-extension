@@ -8,32 +8,34 @@
   %h2 Categories
   %p Products within your shop are organised in categories
   
-  %ul#shop_product_categories_list
-    %li.category#shop_product_category_guys
-      %span.title 
-        = link_to 'Guys', '/shop/products/categories/guys', { :class => 'current', :'data-id' => '1' }
-    %li.category#shop_product_category_guys
-      %span.title        
-        = link_to 'Gals', '/shop/products/categories/gals', { :'data-id' => '2' }
-    %li.category#shop_product_category_guys
-      %span.title        
-        = link_to 'Kids', '/shop/products/categories/kids', { :'data-id' => '3' }
-    %li.new.category
-      %span.title        
-        = link_to 'Create', '/shop/products/categories/kids', :class => 'new'
+  #shop_product_categories
+    %ul#shop_product_categories_list
+      %li.category#shop_product_category_guys
+        %span.title 
+          = link_to 'Guys', '/shop/products/categories/guys', { :'data-id' => '1' }
+      %li.category#shop_product_category_guys
+        %span.title        
+          = link_to 'Gals', '/shop/products/categories/gals', { :'data-id' => '2' }
+      %li.category#shop_product_category_guys
+        %span.title        
+          = link_to 'Kids', '/shop/products/categories/kids', { :'data-id' => '3' }
   
+    #shop_product_category_create.new
+      .category
+        %span.title        
+          = link_to 'New Category', '/shop/products/categories/kids', :class => 'new'
   
   #shop_product_container
     %form
       #shop_product_category
-        %input#shop_product_category_title.textbox{:value => "Guys"}
+        %input#shop_product_category_title.textbox.clearable
 
       #shop_product
         #shop_product_inputs
           #shop_product_inputs_main
-            %input#shop_product_name{:name => 'product[title]', :value => "Retro Fun T-Shirt"}
+            %input#shop_product_title.clearable{:name => 'product[title]'}
             %span#shop_product_currency $
-            %input#shop_product_price{:name => 'product[price]', :value => "69.69"}
+            %input#shop_product_price.clearable{:name => 'product[price]'}
           
             #shop_product_fields{:style=>"display: none"}
               %table.fieldset
@@ -41,7 +43,7 @@
                   %th.label
                     %label{:for=>"page_slug"} handle
                   %td.field
-                    %input#shop_product_handle{:value => "retro_fun_t-shirt"}
+                    %input#shop_product_handle
                   %td.actions
           %p.more_or_less
             %a{:id=>"more_shop_product_fields", :href=>"javascript: $('shop_product_fields').show(); $('less_shop_product_fields').show(); $('more_shop_product_fields').hide(); this.stop()"} More
@@ -53,10 +55,10 @@
             .detail.page{'data-caption'=>"images"}
               %div
                 images here
-              %input{:type=>"hidden",:name=>"product[images][0]"}
+              %input.clearable{:type=>"hidden",:name=>"product[images][0]"}
             .detail.page{'data-caption'=>"description"}
               %div
-                %textarea.large#shop_product_description{:name=>"product[description]", :style=>"width: 100%"}=""
+                %textarea.large.clearable#shop_product_description{:name=>"product[description]", :style=>"width: 100%"}=""
       
         #shop_product_actions
           %input#shop_product_submit{:type => "submit"}
@@ -70,17 +72,17 @@
   %ul#shop_products_list
     %li.product#shop_product-retro_fun
       %span.title
-        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun', {:class => 'current', :'data-sku' => 'retro_fun', :'data-id' => '1' }
+        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun', { :'data-sku' => 'retro_fun', :'data-id' => '1' }
     %li.product#shop_product-retro_boring
       %span.title
-        = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring', {:'data-sku' => 'retro_boring', :'data-id' => '2' }
+        = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring', { :'data-sku' => 'retro_boring', :'data-id' => '2' }
     %li.product#shop_product-retro_cool
       %span.title
-        = link_to 'Retro Cool T-Shirt', '/shop/products/retro_cool', {:'data-sku' => 'retro_cool', :'data-id' => '3' }
+        = link_to 'Retro Cool T-Shirt', '/shop/products/retro_cool', { :'data-sku' => 'retro_cool', :'data-id' => '3' }
     %li.product#shop_product-retro_baby
       %span.title
-        = link_to 'Retro Baby T-Shirt', '/shop/products/retro_baby', {:'data-sku' => 'retro_baby', :'data-id' => '4' }
+        = link_to 'Retro Baby T-Shirt', '/shop/products/retro_baby', { :'data-sku' => 'retro_baby', :'data-id' => '4' }
   
   #shop_product_create.new
     %span.title
-      = link_to 'Create Product', '/shop/products/new'
+      = link_to 'New Product', '/shop/products/new'

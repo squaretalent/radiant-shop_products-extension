@@ -31,14 +31,18 @@ body
   :width                    61%
   :padding                  2%
     
-  #shop_product_categories_list
+  #shop_product_categories
     :width                  15%
-    :float                  left    
+    :float                  left
+        
+  #shop_product_categories_list, #shop_product_category_create
+    :width                  100%
+    :float                  left
     :margin
       :top                = !line_height*0.5
-      :bottom             = !line_height
+      :bottom             = !line_height*0.25
       
-    li.category
+    .category
       :margin
         :bottom             2px
         :top                2px
@@ -75,17 +79,21 @@ body
           :font
             :weight         bold
 
-        &.new
+  #shop_product_category_create
+  
+    .category
+  
+      a
+        :background
+          :color              = !green_light
+        :color                = !green
+        :font
+          :weight               bold
+      
+        &:hover, &.current
           :background
-            :color        = !green_light
-          :color          = !grey_dark
-          :font
-            :weight         bold
-            
-          &:hover, &.current
-            :background
-              :color      = !green
-            :color        = !white
+            :color            = !green
+          :color              = !green_light
     
   #shop_product_container
     :width                  84%
@@ -146,7 +154,7 @@ body
         :background
           :color          = !tan
       
-      #shop_product_name
+      #shop_product_title
         :float              left
         :height           = !line_height*1.25
         :width              80%
