@@ -9,9 +9,9 @@
   %p Products within your shop are organised in categories
   
   %ul#shop_product_categories_list
-    %li.category#shop_product_category_guys{:class => 'current'}
+    %li.category#shop_product_category_guys
       %span.title 
-        = link_to 'Guys', '/shop/products/categories/guys'
+        = link_to 'Guys', '/shop/products/categories/guys', :class => 'current'
     %li.category#shop_product_category_guys
       %span.title        
         = link_to 'Gals', '/shop/products/categories/gals'
@@ -68,9 +68,9 @@
   %p These are all the products you have for sale
   
   %ul#shop_products_list
-    %li.product#shop_product-retro_fun{:class => 'current'}
+    %li.product#shop_product-retro_fun
       %span.title
-        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun'
+        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun', :class => 'current'
     %li.product#shop_product-retro_boring
       %span.title
         = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring'
