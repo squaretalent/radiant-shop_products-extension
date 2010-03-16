@@ -11,13 +11,13 @@
   %ul#shop_product_categories_list
     %li.category#shop_product_category_guys
       %span.title 
-        = link_to 'Guys', '/shop/products/categories/guys', :class => 'current'
+        = link_to 'Guys', '/shop/products/categories/guys', { :class => 'current', :'data-id' => '1' }
     %li.category#shop_product_category_guys
       %span.title        
-        = link_to 'Gals', '/shop/products/categories/gals'
+        = link_to 'Gals', '/shop/products/categories/gals', { :'data-id' => '2' }
     %li.category#shop_product_category_guys
       %span.title        
-        = link_to 'Kids', '/shop/products/categories/kids'
+        = link_to 'Kids', '/shop/products/categories/kids', { :'data-id' => '3' }
     %li.new.category
       %span.title        
         = link_to 'Create', '/shop/products/categories/kids', :class => 'new'
@@ -70,10 +70,13 @@
   %ul#shop_products_list
     %li.product#shop_product-retro_fun
       %span.title
-        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun', :class => 'current'
+        = link_to 'Retro Fun T-Shirt', '/shop/products/retro_fun', {:class => 'current', :'data-sku' => 'retro_fun', :'data-id' => '1' }
     %li.product#shop_product-retro_boring
       %span.title
-        = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring'
-    %li.product#shop_product-retro_insane
+        = link_to 'Retro Boring T-Shirt', '/shop/products/retro_boring', {:'data-sku' => 'retro_boring', :'data-id' => '2' }
+    %li.product#shop_product-retro_cool
       %span.title
-        = link_to 'Retro Insane T-Shirt', '/shop/products/retro_insane'
+        = link_to 'Retro Cool T-Shirt', '/shop/products/retro_cool', {:'data-sku' => 'retro_cool', :'data-id' => '3' }
+    %li.product#shop_product-retro_baby
+      %span.title
+        = link_to 'Retro Baby T-Shirt', '/shop/products/retro_baby', {:'data-sku' => 'retro_baby', :'data-id' => '4' }        

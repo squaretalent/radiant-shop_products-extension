@@ -1,6 +1,5 @@
-[
+{"handle":"guys","title":"guys","id":1,
+"products":[
   {"id":1,"price":"11.11","sku":"retro_fun","handle":"retro_fun","title":"Retro Fun T-Shirt","description":"This shirt is Retro Fun","category":{"id":1,"title":"guys"}},
   {"id":2,"price":"22.22","sku":"retro_boring","handle":"retro_boring","title":"Retro Boring T-Shirt","description":"This shirt is Retro Boring","category":{"id":1,"title":"guys"}},
-  {"id":3,"price":"33.33","sku":"retro_cool","handle":"retro_cool","title":"Retro Cool T-Shirt","description":"This shirt is Retro Cool","category":{"id":2,"title":"gals"}},
-  {"id":4,"price":"44.44","sku":"retro_baby","handle":"retro_baby","title":"Retro Baby T-Shirt","description":"This shirt is Baby Insane","category":{"id":3,"title":"kids"}},
-]
+]}
