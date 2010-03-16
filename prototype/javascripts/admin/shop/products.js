@@ -1,9 +1,9 @@
 document.observe("dom:loaded", function() {
   shop = new Shop();
+  shop.ClearProductForm();
+  shop.ClearCategoryForm();
   $('shop_product').hide();
-  $$('.clearable').each(function(input) {
-    input.value = '';
-  })
+  $('shop_product_category').hide();
 });
 
 var DisableClickBehaviour = Behavior.create({
@@ -19,7 +19,7 @@ var DisableClickBehaviour = Behavior.create({
 var SelectShopCategory = Behavior.create({
   onclick : function(e) {
     shop.SelectCategory(this.element);
-    shop.UpdateCategory(this.element);
+    shop.PullCategory(this.element);
   }
 });
 
@@ -38,7 +38,8 @@ var CreateShopCategory = Behavior.create({
 //    Update primary window to display all the product details
 var SelectShopProduct = Behavior.create({
   onclick : function(e) {
-    shop.SelectProduct(this.element);
+    var product = shop.SelectProduct(this.element);
+    shop.PullProduct(product);
   }
 })
 
@@ -46,40 +47,34 @@ var SelectShopProduct = Behavior.create({
 //    Primary window will be the product category and blank product window
 var CreateShopProduct = Behavior.create({
   onclick : function(e) {
+    shop.SelectProduct(this.element);
     shop.CreateProduct();
   }
 });
 
 var Shop = Class.create({
   SelectCategory: function(category) {
-    try {
-      $('shop_product_categories_list').down('a.current').removeClassName('current');
-    } catch(err) {
-      //why do i have to do this
-    }
+    $('shop_product_category_create').down('a').removeClassName('current');
+    $('shop_product_categories_list').select('a.current').each(function(current) { current.removeClassName('current'); });
+    
     category.addClassName('current');
+    $('shop_product_create').show();
+    $('shop_product_category').show();
   },
   
-  UpdateCategory: function(category) {
+  PullCategory: function(category) {
     $('shop_product_category_title').value = category.text;
     
     new Ajax.Request('/admin/categories/' + category.readAttribute("data-id") + '.json?' + new Date().getTime(), { 
       method: 'get',
       onSuccess: function(data) {
         this.response = data.responseText.evalJSON();
-        this.UpdateCategoryProducts();
+        this.UpdateCategory();
       }.bind(this),
     });
   },
   
-  CreateCategory: function() {
-    $('shop_products_list').innerHTML = "";
-    $('shop_product_category_title').value = "";
-    $('shop_product').hide();
-    $('shop_product_create').hide();
-  },
-  
-  UpdateCategoryProducts: function() {
+  UpdateCategory: function() {
     $('shop_products_list').innerHTML = "";
     
     this.response.products.each(function(product) {
@@ -90,34 +85,49 @@ var Shop = Class.create({
       $('shop_products_list').appendChild(li.insert(span.insert(a.insert(product.title))));
     });
     
-    this.SelectProduct("first");
-    $('shop_product_create').show();
+    
+    // Grab the first product
+    var product = this.SelectProduct("first");
+    this.PullProduct(product);
   },
   
-  SelectProduct: function(product) {
+  CreateCategory: function() {
+    $(this).ClearCategoryForm();
+    $(this).ClearProductForm();
+    
+    $('shop_product').hide();
+    $('shop_product_create').hide();
+    $('shop_products_list').innerHTML = '';
+  },
+  
+  SelectProduct: function(product) {    
     if(product == "first") {
       product = $('shop_products_list').down('a');
     } else {
-      try {
-        $('shop_products_list').down('a.current').removeClassName('current');
-      } catch(err) {
-        //why do i have to do this
-      }
+      $('shop_products_list').select('a.current').each(function(current) { current.removeClassName('current'); });
+      $('shop_product_create').removeClassName('current');
     }
     
     product.addClassName('current');
     
+    $('shop_product_category').show();
+    
+    return product;
+  },
+  
+  PullProduct: function(product) {
     new Ajax.Request('/admin/products/' + product.readAttribute("data-id") + '.json?' + new Date().getTime(), { 
       method: 'get',
       onSuccess: function(data) {
         this.response = data.responseText.evalJSON();
         this.UpdateProduct();
       }.bind(this),
-    });    
+    });
   },
   
   UpdateProduct: function() {
     $('shop_product').show();
+    $('shop_product_category_id').value = this.response.category.id;
     $('shop_product_category_title').value = this.response.category.title;
     $('shop_product_title').value = this.response.title;
     $('shop_product_price').value = this.response.price;
@@ -125,12 +135,23 @@ var Shop = Class.create({
   },
   
   CreateProduct: function() {
-    $('shop_product_inputs').select('input').value = '';
+    $(this).ClearProductForm();
+  },
+  
+  ClearCategoryForm: function() {
+    $$('#shop_product_category .clearable').each(function(input) {
+      input.value = '';
+    });
+  },
+  
+  ClearProductForm: function() {
+    $$('#shop_product .clearable').each(function(input) {
+      input.value = '';
+    });
   }
 });
 
 Event.addBehavior({
-  
   '#shop_product_categories_list li a, #shop_products_list li a, #shop_product_category_create, #shop_product_create': DisableClickBehaviour(),
   
   '#shop_product_categories_list li a': SelectShopCategory(), // TODO only call this on non-current and non-new

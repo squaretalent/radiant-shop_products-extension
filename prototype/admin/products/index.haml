@@ -12,13 +12,13 @@
     %ul#shop_product_categories_list
       %li.category#shop_product_category_guys
         %span.title 
-          = link_to 'Guys', '/shop/products/categories/guys', { :'data-id' => '1' }
+          = link_to 'Guys', '/shop/products/categories/guys', { :id => 'shop_product-category-1', :'data-id' => '1' }
       %li.category#shop_product_category_guys
         %span.title        
-          = link_to 'Gals', '/shop/products/categories/gals', { :'data-id' => '2' }
+          = link_to 'Gals', '/shop/products/categories/gals', { :id => 'shop_product-category-2', :'data-id' => '2' }
       %li.category#shop_product_category_guys
         %span.title        
-          = link_to 'Kids', '/shop/products/categories/kids', { :'data-id' => '3' }
+          = link_to 'Kids', '/shop/products/categories/kids', { :id => 'shop_product-category-3', :'data-id' => '3' }
   
     #shop_product_category_create.new
       .category
@@ -29,6 +29,7 @@
     %form
       #shop_product_category
         %input#shop_product_category_title.textbox.clearable
+        %input#shop_product_category_id.textbox.clearable{:type => 'hidden'}
 
       #shop_product
         #shop_product_inputs
