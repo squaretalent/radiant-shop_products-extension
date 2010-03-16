@@ -33,7 +33,7 @@
           #shop_product_inputs_main
             %input#shop_product_name{:name => 'product[title]', :value => "Retro Fun T-Shirt"}
             %span#shop_product_currency $
-            %input#shop_product_cost{:name => 'product[price]', :value => "69.69"}
+            %input#shop_product_price{:name => 'product[price]', :value => "69.69"}
           
             #shop_product_fields{:style=>"display: none"}
               %table.fieldset
@@ -79,4 +79,8 @@
         = link_to 'Retro Cool T-Shirt', '/shop/products/retro_cool', {:'data-sku' => 'retro_cool', :'data-id' => '3' }
     %li.product#shop_product-retro_baby
       %span.title
-        = link_to 'Retro Baby T-Shirt', '/shop/products/retro_baby', {:'data-sku' => 'retro_baby', :'data-id' => '4' }        
+        = link_to 'Retro Baby T-Shirt', '/shop/products/retro_baby', {:'data-sku' => 'retro_baby', :'data-id' => '4' }
+  
+  #shop_product_create.new
+    %span.title
+      = link_to 'Create Product', '/shop/products/new'

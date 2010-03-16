@@ -9,6 +9,7 @@
 !blue                     = #b3e6ff
 !blue_light               = #d9f3ff
 !blue_dark                = #366c92
+!green_light              = #c5e2be
 !green                    = #58824e
 !red                      = #cc0000
 !tan                      = #cac8c0
@@ -76,10 +77,15 @@ body
 
         &.new
           :background
-            :color        = !green
-          :color          = !white
+            :color        = !green_light
+          :color          = !grey_dark
           :font
             :weight         bold
+            
+          &:hover, &.current
+            :background
+              :color      = !green
+            :color        = !white
     
   #shop_product_container
     :width                  84%
@@ -160,7 +166,7 @@ body
         :text
           :align            right
       
-      #shop_product_cost
+      #shop_product_price
         :float              right
         :height           = !line_height*1.25      
         :width              12%
@@ -272,7 +278,7 @@ body
   :width                    31%
   :height                   100%
   :padding                  2%
-    
+
   #shop_products_list
     :margin
       :top                = !line_height
@@ -280,10 +286,8 @@ body
       :color                transparent
       :width                4px
       :style                solid
-    
+
     li.product
-      :line
-        :height           = !line_height*1.5
       :text
         :indent           = !line_height*1.5
 
@@ -293,14 +297,42 @@ body
 
       a
         :display            block
+        :line
+          :height         = !line_height*1.5
         :padding          = !line_height*0.5
         :color            = !blue_dark
         :text
-          :decoration       none        
-                
+          :decoration       none
+
         &.current
           :background
             :color        = !blue_dark
           :color          = !blue_light
           :text
             :decoration     none
+
+  #shop_product_create
+    :margin                 4px
+    :background
+      :color              = !green_light
+
+    a
+      :display              block
+      :line
+        :height           = !line_height*1.5
+      :height             = !line_height*1.5
+      :padding            = !line_height*0.5
+      :text
+        :indent           = !line_height
+      :color              = !green
+      :font
+        :weight             bold
+      :text
+        :decoration         none
+
+    &:hover
+      :background
+        :color            = !green
+        
+      a, a.current
+        :color            = !green_light
