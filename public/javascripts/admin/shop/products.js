@@ -2,19 +2,18 @@ var ShopProducts = {};
 var ShopCategories = {};
 
 document.observe("dom:loaded", function() {
-  
   shop = new Shop();
   shop.ProductClear();
   shop.CategorySelect($('shop_category_create'));
   
   Event.addBehavior({
+    '#shop_categories .delete': ShopCategories.Destroy,
     '#shop_categories .category': ShopCategories.List,
     '#shop_category_form': ShopCategories.Form,
     '#shop_products .product': ShopProducts.List,
     
     '#shop_product_details': TabControlBehavior()
   });
-  
 });
 
 ShopCategories.List = Behavior.create({
@@ -23,10 +22,17 @@ ShopCategories.List = Behavior.create({
   }
 });
 
+ShopCategories.Destroy = Behavior.create({
+  onclick : function() {
+    shop.CategoryDestroy(this.element.up('.category'));
+    shop.CategorySelect($('shop_category_create'));
+    return false;
+  }
+});
+
 ShopCategories.Form = Behavior.create({
   onsubmit : function() {
     shop.CategorySubmit(this.element);
-    
     return false;
   }
 })
@@ -42,7 +48,7 @@ var Shop = Class.create({
   CategorySelect: function(element) { 
     this.CategoryClear();
     this.ProductClear();
-
+    
     element.addClassName('current');
     element.stopObserving('click');
     
@@ -61,7 +67,7 @@ var Shop = Class.create({
       $('shop_category_method').value = 'put';
       $('shop_category_form').setAttribute('action', $('admin_shop_categories_path').value + '/' + element.readAttribute('data-id') + '.js');
       
-      new Ajax.Request($('admin_shop_categories_path').value + '/' + element.readAttribute('data-id') + '/products.js?' + new Date().getTime(), { 
+      new Ajax.Request(urlify($('admin_shop_categories_path').value, element.readAttribute('data-id') + '/products'), { 
         method: 'get',
         onSuccess: function(data) {
           
@@ -106,12 +112,27 @@ var Shop = Class.create({
   
   CategoryUpdate: function(element) {
     var element = $('shop_categories_list').down('.current');
-
-    element = element.replace(this.response); // This replaces the current item with the returned html
-
+    
+    // This replaces the current item with the returned html
+    element = element.replace(this.response); 
+    
     // element is still the old item, but the id is the same as the new, so call on that id
     ShopCategories.List.attach($(element.id));
     this.CategorySelect($(element.id));
+  },
+  
+  CategoryDestroy: function(element) {
+    element.hide();
+    new Ajax.Request(urlify($('admin_shop_categories_path').value, element.readAttribute('data-id')), { 
+      method: 'delete',
+      onSuccess: function(data) {
+        element.remove();
+      }.bind(this),
+      onFailure: function(data) {
+        element.show();
+        alert(data.responseText);
+      }.bind(this)
+    });
   },
   
   CategoryClear: function() {
@@ -143,7 +164,7 @@ var Shop = Class.create({
     
     } else {
 
-      new Ajax.Request($('admin_shop_products_path').value + '/' + element.readAttribute("data-id") + '.json?' + new Date().getTime(), { 
+      new Ajax.Request(urlify($('admin_shop_products_path').value,element.readAttribute("data-id")), { 
         method: 'get',
         onSuccess: function(data) {
           this.response = data.responseText.evalJSON();
@@ -184,3 +205,14 @@ var Shop = Class.create({
   }
   
 });
+
+function urlify(route, id) {
+  var url = route;
+  if ( id !== undefined ) {
+    url += '/' + id
+  }
+  
+  url += '.js?' + new Date().getTime();
+  
+  return url;
+}
