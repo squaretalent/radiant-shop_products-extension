@@ -52,9 +52,14 @@ var Shop = Class.create({
       $('shop_products_alt').show();
       $('shop_product_create').hide();
       $('shop_category_submit').value = 'create';
+      $('shop_category_method').value = 'post';
+      $('shop_category_form').setAttribute('action', $('admin_shop_categories_path').value + '.js');
+      
     } else {
       $('shop_category_title').value = element.readAttribute('data-title');
       $('shop_category_submit').value = 'update';
+      $('shop_category_method').value = 'put';
+      $('shop_category_form').setAttribute('action', $('admin_shop_categories_path').value + '/' + element.readAttribute('data-id') + '.js');
       
       new Ajax.Request($('admin_shop_categories_path').value + '/' + element.readAttribute('data-id') + '/products.js?' + new Date().getTime(), { 
         method: 'get',
@@ -63,7 +68,7 @@ var Shop = Class.create({
           // Ready to show UI
           $('shop_category').show();
           $('shop_product_create').show();
-
+          
           // Fill Products List
           $('shop_products_list').innerHTML = data.responseText;
           
@@ -75,15 +80,38 @@ var Shop = Class.create({
   },
   
   CategorySubmit: function(element) {
-    console.log(element.serialize(true));
+    this.data = element.serialize(true);
+    this.element = element;
+    
+    new Ajax.Request(element.action + '?' + new Date().getTime(), { 
+      method: this.data._method,
+      parameters: this.data,
+      onSuccess: function(data) {
+        this.response = data.responseText;
+        
+        if(this.data._method == 'post') { this.CategoryCreate(); } 
+        else { this.CategoryUpdate(); }
+      }.bind(this),
+    });
   },
   
   CategoryCreate: function() {
-    // Call back from controller create
+    $('shop_categories_list').insert({'top': this.response});
+    
+    var element = $('shop_categories_list').down();
+    
+    ShopCategories.List.attach(element);
+    this.CategorySelect(element);
   },
   
   CategoryUpdate: function(element) {
-    // Call back from controller update
+    var element = $('shop_categories_list').down('.current');
+
+    element = element.replace(this.response); // This replaces the current item with the returned html
+
+    // element is still the old item, but the id is the same as the new, so call on that id
+    ShopCategories.List.attach($(element.id));
+    this.CategorySelect($(element.id));
   },
   
   CategoryClear: function() {

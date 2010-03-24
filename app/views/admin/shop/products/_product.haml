@@ -1,4 +1,4 @@
-%li.product{:'data-id' => product.id, :'data-title' => product.title}
+%li.product{:id => "shop_product_#{product.id}", :'data-id' => product.id, :'data-title' => product.title}
   %span.price= product.price
   %img.image{ :src => '/images/admin/placeholder.png'}
   %span.title= product.title
