@@ -1,0 +1,269 @@
+!line_height              = 18px
+
+!white                    = #ffffff
+!black                    = #121212
+!gray                     = #e6e6e6
+!gray_dark                = #7e7e7e
+!blue                     = #b3e6ff
+!blue_light               = #d9f3ff
+!blue_dark                = #366c92
+!green_light              = #c5e2be
+!green                    = #58824e
+!red                      = #880000
+!red_light                = #cd6464
+!tan                      = #cac8c0
+
+body
+  :min
+    :width                1024px
+  :height                 100%
+  :background
+    :color              = !blue_light
+  :overflow
+    :y                    scroll
+
+#content
+
+  #shop_categories_content
+    :float                left
+    :width                65%
+    :min
+      :width              610px
+    :margin
+      :right              1%
+      :bottom           = !line_height*2
+    
+    #shop_categories
+      :float              left
+      :width              19%
+      :margin             0
+      
+      #shop_category_create
+        :margin
+          :bottom       = !line_height
+        :background
+          :color        = !green_light
+        :color          = !green
+        :font
+          :weight         bold
+          
+        &:hover, &.current
+          :background
+            :color      = !green
+          :color        = !green_light
+      
+      .category
+        :position         relative
+        :height         = !line_height*2
+        :line
+          :height       = !line_height*2
+        :font
+          :size         = !line_height*0.85
+        :padding          0 30px 0 10px
+        :color          = !blue_dark
+        :cursor           pointer
+        :overflow         hidden
+        :white
+          :space          nowrap
+          
+        .title
+          :display        block
+          :width          100%
+          :overflow       hidden
+          
+        .actions
+          :position       absolute
+          :display        block
+          :width          100%
+          :top            0
+          :left           0
+          
+          .delete
+            :position     absolute
+            :right        5px
+            :top          8px
+            :width        20px
+            :height       20px
+            :overflow     hidden
+            :display      block
+            :cursor       pointer
+            :background
+              :image      url('/images/admin/remove_disabled.png')
+              :repeat     no-repeat
+              :position   0 0
+              
+            &:hover
+              :background
+                :image    url('/images/admin/remove.png')
+        
+        &:hover, &.current
+          :background
+            :color      = !blue_dark
+          :color        = !blue_light
+          
+          &.current
+            :font
+              :weight     bold
+        
+        &#galleries_empty
+          :color        = !gray_dark
+          :cursor         default
+          
+          &:hover
+            :background   transparent
+    
+    #shop_products_categories
+      :float              left
+      :width              75%
+      :min
+        :width            485px
+        
+    #shop_category, #shop_product, #shop_product_alt
+      :padding            10px
+      :margin           = "0 0 #{!line_height} 2%"
+      :background
+        :color          = !gray
+      :outline            2px solid #000
+      
+      #shop_category_fields
+        :overflow         hidden
+        :width            100%
+      
+        #shop_category_title
+          :width          85%
+          :float          left
+          :padding        0 0.5%
+          :height       = !line_height*1.5
+          :font
+            :size       = !line_height
+            
+          &.pending
+            :background
+              :color    = !blue
+              
+        #shop_category_submit
+          :float          right
+          :margin
+            :top          7px
+            
+      #shop_product
+    
+  #shop_products_content
+    :float                left
+    :width                33%
+    :margin               0 0 0 1%
+    
+    #shop_products
+      :margin
+        :bottom           = !line_height*2
+      
+      #shop_product_create
+        :width            100%
+        :float            none
+        :height         = !line_height*2
+        :line
+          :height       = !line_height*2
+        :margin           0
+          :bottom       = !line_height
+        :padding          0
+        :background
+          :color        = !green_light
+        :color          = !green
+        :font
+          :weight         bold
+        :cursor           pointer
+          
+        &:hover, &.current
+          :background
+            :color      = !green
+          :color        = !green_light
+          
+        .title
+          :display        block
+          :width          100%
+          :padding        0 10px
+          :position       relative
+          :margin         0
+          :top            0
+          :line
+            :height     = !line_height*2
+          
+      #shop_products_empty, #shop_products_alt
+        :width            100%
+        :float            none
+        :color          = !gray_dark
+        :cursor           default
+        
+        &:hover
+          :background
+            :color        transparent
+            
+          .caption
+            :color      = !gray_dark !important
+            
+        .title
+          :position       relative
+          :top            0
+          :padding        0
+          :margin         0
+          :line
+            :height     = !line_height*2
+            
+      #products_list
+        :overflow         hidden
+      
+      .product
+        :position         relative
+        :height         = !line_height*5
+        :line
+          :height       = !line_height*2
+        :font
+          :size         = !line_height*0.85
+        :padding          0 1%
+        :margin         = "0 1% #{!line_height}"
+        :color          = !blue_dark
+        :cursor           pointer
+        :overflow         hidden
+        
+        &:hover, &.current
+          :background
+            :color      = !blue_dark
+          :color        = !blue_light
+            
+          .caption
+            :color      = !gray
+            
+        .price
+          :float          right
+          :margin       = !line_height*0.5
+              
+        .image
+          :float          left
+          :max
+            :width      = !line_height*4
+            :height     = !line_height*4
+          :margin       = !line_height*0.5
+              
+        .title
+          :display        block
+          :padding        5px
+          :top          = !line_height*4.5
+          :margin       = !line_height*0.5
+          :line
+            :height     = !line_height
+          :font
+            :weight       bold
+            
+        .caption
+          :display        block
+          :line
+            :height     = !line_height*1.25
+          :font
+            :size         85%
+          :color        = !gray_dark
+          
+        .actions
+          :display        none
+          
+#shop_products_routes
+  :display                none

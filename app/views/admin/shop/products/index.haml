@@ -1,0 +1,40 @@
+- @page_title = 'Shop Products - ' + default_page_title
+= render '/admin/shop/products/head'
+
+#shop_categories_content
+
+  %h2 Categories
+  %p Products within your shop are organised in categories
+  
+  #shop_categories
+    #shop_category_create.category{:'data-id' => ''}
+      %span.title New Category
+    %ul#shop_categories_list
+      = render :partial => '/admin/shop/categories/category', :collection => @shop_categories
+  
+  #shop_products_categories
+  
+    #shop_category
+      = render :partial => '/admin/shop/categories/form'
+  
+    #shop_product
+      = render :partial => '/admin/shop/products/form'
+      
+    #shop_product_alt
+      %span.note Once you have created a category you can add products
+  
+#shop_products_content
+
+  %h2 Products
+  %p Click on a product to see more details
+  
+  #shop_products
+    #shop_product_create.product{:'data-id' => ''}
+      %span.title New Product
+    #shop_products_alt.product{:'data-id' => ''}
+      %span.title Select a Category
+      %sapn.caption Get started by selecting a category
+    %ul#shop_products_list
+      
+#shop_products_routes
+  = render '/admin/shop/products/routes'

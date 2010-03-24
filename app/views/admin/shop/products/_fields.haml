@@ -1,0 +1,20 @@
+= f.hidden_field :id
+= f.text_field :title, :class => 'clearable'
+= f.label :price, '$', :id => 'shop_product_price_label'
+= f.text_field :price, :class => 'clearable'
+
+#extended_metadata{meta_visible(:meta)}
+  %input#page_part_index_field{ :type => 'hidden' }
+  %table.fieldset
+    %tr
+      %th.label
+        = f.label :handle
+      %td.field
+        = f.text_field :handle
+    %tr
+      %th.label
+        = f.label :sku
+      %td.field
+        = f.text_field :sku
+%p.more_or_less
+  %a{:href=>'#extended_metadata',:class => "rounded_bottom_right rounded_bottom_left #{(meta_errors? ? 'more' : 'less')}"}= meta_label

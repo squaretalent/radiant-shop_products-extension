@@ -1,164 +1,127 @@
+var ShopProducts = {};
+var ShopCategories = {};
+
 document.observe("dom:loaded", function() {
+  
   shop = new Shop();
-  shop.ClearProductForm();
-  shop.ClearCategoryForm();
-  $('shop_product').hide();
-  $('shop_product_category').hide();
+  shop.ProductClear();
+  shop.CategoryClear();
+  
+  Event.addBehavior({
+    '#shop_product_categories .category': ShopCategories.List,
+    '#shop_products .product': ShopProducts.List,
+    
+    'div#shop_product_details': TabControlBehavior()
+  });
+  
 });
 
-var DisableClickBehaviour = Behavior.create({
-  onclick : function(e) {
-    return false;
+var ShopCategories.List = Behavior.create({
+  onclick : function() {
+    shop.CategorySelect(this.element);
   }
 });
 
-//  Select Shop Category
-//    Category exists, and has a name as well as products
-//    Update primary window to display category and first product
-//    Update products list to show all products
-var SelectShopCategory = Behavior.create({
+var ShopProducts.List = Behavior.create({
   onclick : function(e) {
-    shop.SelectCategory(this.element);
-    shop.PullCategory(this.element);
-  }
-});
-
-//  Create Shop Category
-//    Clear out categories and products
-//    Primary window is now a blank slate for a new category
-var CreateShopCategory = Behavior.create({
-  onclick : function(e) {
-    shop.SelectCategory(this.element);
-    shop.CreateCategory();
-  }
-});
-
-//  Select Shop Product
-//    Product exists, has a name and infinite properties
-//    Update primary window to display all the product details
-var SelectShopProduct = Behavior.create({
-  onclick : function(e) {
-    var product = shop.SelectProduct(this.element);
-    shop.PullProduct(product);
-  }
-})
-
-//  Create Shop Product
-//    Primary window will be the product category and blank product window
-var CreateShopProduct = Behavior.create({
-  onclick : function(e) {
-    shop.SelectProduct(this.element);
-    shop.CreateProduct();
+    shop.ProductSelect(this.element);
   }
 });
 
 var Shop = Class.create({
-  SelectCategory: function(category) {
-    $('shop_product_category_create').down('a').removeClassName('current');
-    $('shop_product_categories_list').select('a.current').each(function(current) { current.removeClassName('current'); });
-    
-    category.addClassName('current');
-    $('shop_product_create').show();
-    $('shop_product_category').show();
-  },
   
-  PullCategory: function(category) {
-    $('shop_product_category_title').value = category.text;
+  CategorySelect: function(element) { 
+    this.CategoryClear();
+    this.ProductClear();
     
-    new Ajax.Request('/admin/categories/' + category.readAttribute("data-id") + '.json?' + new Date().getTime(), { 
-      method: 'get',
-      onSuccess: function(data) {
-        this.response = data.responseText.evalJSON();
-        this.UpdateCategory();
-      }.bind(this),
-    });
-  },
-  
-  UpdateCategory: function() {
-    $('shop_products_list').innerHTML = "";
+    element.addClassName('current');
     
-    this.response.products.each(function(product) {
-      li    = new Element('li', { 'class' : "product", 'id' : "shop_product-" + product.sku });
-      span  = new Element('span', { 'class' : "title" });
-      a     = new Element('a', { 'href' : "/product/" + product.sku, 'data-id' : product.id, 'data-sku' : product.sku });
-      
-      $('shop_products_list').appendChild(li.insert(span.insert(a.insert(product.title))));
-    });
-    
-    
-    // Grab the first product
-    var product = this.SelectProduct("first");
-    this.PullProduct(product);
-  },
-  
-  CreateCategory: function() {
-    $(this).ClearCategoryForm();
-    $(this).ClearProductForm();
-    
-    $('shop_product').hide();
-    $('shop_product_create').hide();
-    $('shop_products_list').innerHTML = '';
-  },
-  
-  SelectProduct: function(product) {    
-    if(product == "first") {
-      product = $('shop_products_list').down('a');
+    if(element.getAttribute('data-id') == '') {
+      $('shop_product').hide();
+      $('shop_product_create').hide();
+      $('shop_products_list').innerHTML = '';
     } else {
-      $('shop_products_list').select('a.current').each(function(current) { current.removeClassName('current'); });
-      $('shop_product_create').removeClassName('current');
+      $('shop_product_category_title').value = element.text;
+      
+      new Ajax.Request('/admin/categories/' + element.readAttribute("data-id") + '.js?' + new Date().getTime(), { 
+        method: 'get',
+        onSuccess: function(data) {
+          
+          // Ready to show UI
+          $('shop_product_category').show();
+          $('shop_product_create').show();
+          
+          // Fill Products List
+          $('shop_products_list').innerHTML = data.responseText;
+          
+          // Select First Product
+          this.ProductSelect($('shop_products_list').down('.product'));
+        }.bind(this),
+      });
     }
-    
-    product.addClassName('current');
-    
-    $('shop_product_category').show();
-    
-    return product;
   },
   
-  PullProduct: function(product) {
+  CategoryCreate: function() {
+    // Call back from controller create
+  },
+  
+  CategoryUpdate: function(element) {
+    // Call back from controller update
+  },
+  
+  CategoryClear: function() {
+    $$('.category.current').each(function(element) { 
+      element.removeClassName('current'); 
+      Galleries.List.attach(element); 
+    });
+    
+    $$('#shop_product_category .clearable').each(function(input) {
+      input.value = '';
+    });
+    
+    $('shop_product_category').hide();
+  },
+  
+  ProductSelect: function(product) {
+    this.productClear();
+    
+    $$('.product.current').each(function(element) { 
+      element.removeClassName('current'); 
+    });
+    
     new Ajax.Request('/admin/products/' + product.readAttribute("data-id") + '.json?' + new Date().getTime(), { 
       method: 'get',
       onSuccess: function(data) {
         this.response = data.responseText.evalJSON();
-        this.UpdateProduct();
+        
+        $('shop_product_category_id').value = this.response.category.id;
+        $('shop_product_category_title').value = this.response.category.title;
+        $('shop_product_title').value = this.response.title;
+        $('shop_product_price').value = this.response.price;
+        $('shop_product_handle').value = this.response.handle;
+        
+        $('shop_product').show();
+        $('shop_product_category').show();
+        
+        product.addClassName('current');
       }.bind(this),
     });
   },
   
-  UpdateProduct: function() {
-    $('shop_product').show();
-    $('shop_product_category_id').value = this.response.category.id;
-    $('shop_product_category_title').value = this.response.category.title;
-    $('shop_product_title').value = this.response.title;
-    $('shop_product_price').value = this.response.price;
-    $('shop_product_handle').value = this.response.handle;
+  ProductCreate: function() {
+    // Call back from controller create
   },
   
-  CreateProduct: function() {
-    $(this).ClearProductForm();
+  ProductUpdate: function(element) {
+    // Call back from controller update
   },
   
-  ClearCategoryForm: function() {
-    $$('#shop_product_category .clearable').each(function(input) {
-      input.value = '';
-    });
-  },
-  
-  ClearProductForm: function() {
+  ProductClear: function() {
     $$('#shop_product .clearable').each(function(input) {
       input.value = '';
     });
+    
+    $('shop_product').hide();
   }
-});
-
-Event.addBehavior({
-  '#shop_product_categories_list li a, #shop_products_list li a, #shop_product_category_create, #shop_product_create': DisableClickBehaviour(),
   
-  '#shop_product_categories_list li a': SelectShopCategory(), // TODO only call this on non-current and non-new
-  '#shop_products_list li a': SelectShopProduct(),
-  
-  '#shop_product_category_create a': CreateShopCategory(),
-  '#shop_product_create a': CreateShopProduct(),
-  
-  'div#shop_product_details': TabControlBehavior()
 });

@@ -34,9 +34,9 @@
       #shop_product
         #shop_product_inputs
           #shop_product_inputs_main
-            %input#shop_product_title.clearable{:name => 'product[title]'}
+            %input#shop_product_title.clearable{:name => 'shop_product[title]'}
             %span#shop_product_currency $
-            %input#shop_product_price.clearable{:name => 'product[price]'}
+            %input#shop_product_price.clearable{:name => 'shop_product[price]'}
           
             #shop_product_fields{:style=>"display: none"}
               %table.fieldset
@@ -53,13 +53,16 @@
         #shop_product_details
           .tabs
           .details
-            .detail.page{'data-caption'=>"images"}
+            #shop_product_description.detail.page{'data-caption'=>"description"}
               %div
-                images here
-              %input.clearable{:type=>"hidden",:name=>"product[images][0]"}
-            .detail.page{'data-caption'=>"description"}
-              %div
-                %textarea.large.clearable#shop_product_description{:name=>"product[description]", :style=>"width: 100%"}=""
+                %textarea.large.clearable#shop_product_description{:name=>"shop_product[description]", :style=>"width: 100%"}=""
+            #shop_product_images.detail.page{'data-caption'=>"images"}
+              %ul.images
+                - 5.times do
+                  %li.image
+                    %img{:src => '/images/admin/shop/product_image_placeholder.png'}
+              %input.clearable{:type=>"hidden",:name=>"shop_product[images][0]"}
+
       
         #shop_product_actions
           %input#shop_product_submit{:type => "submit"}

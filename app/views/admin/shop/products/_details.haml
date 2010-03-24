@@ -1,0 +1,7 @@
+.tabs
+.details
+  #shop_product_description.detail.page{'data-caption'=>"description"}
+    %div
+      = f.text_area :description, :class => 'large clearable', :style => 'width: 100%'
+  #shop_product_images.detail.page{'data-caption'=>"images"}
+    %ul#shop_product_images_list
