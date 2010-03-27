@@ -1,4 +1,5 @@
-= f.hidden_field :id, :class => 'clearable'
+= hidden_field_tag '_method', nil, :id => 'shop_category_method'
+= f.hidden_field :id,  :class => 'clearable'
+
 = f.text_field :title, :class => 'clearable'
 = f.submit 'create'
-= hidden_field_tag '_method', nil, :id => 'shop_category_method'

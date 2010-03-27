@@ -10,15 +10,15 @@
     #shop_category_create.category{:'data-id' => ''}
       %span.title New Category
     %ul#shop_categories_list
-      = render :partial => '/admin/shop/categories/category', :collection => @shop_categories
+      = render :partial => '/admin/shop/categories/excerpt', :collection => @shop_categories
   
   #shop_products_categories
   
     #shop_category
-      = render :partial => '/admin/shop/categories/form'
+      = render :partial => '/admin/shop/categories/category'
   
     #shop_product
-      = render :partial => '/admin/shop/products/form'
+      = render :partial => '/admin/shop/products/product'
       
     #shop_product_alt
       %span.note Once you have created a category you can add products

@@ -2,19 +2,13 @@
 # require_dependency 'application_controller'
 
 class ShopProductsExtension < Radiant::Extension
-  version "1.0"
+  version "0.1"
   description "Describe your extension here"
-  url "http://yourwebsite.com/shop_products"
-
-  # define_routes do |map|
-  #   map.namespace :admin, :member => { :remove => :get } do |admin|
-  #     admin.resources :shop_products
-  #   end
-  # end
+  url "http://github.com/squaretalent/radiant-shop_products-extension"
   
   def activate
-    # tab 'Content' do
-    #   add_item "Shop Products", "/admin/shop_products", :after => "Pages"
-    # end
+    tab 'Shop' do
+      add_item 'Products', '/admin/shop/products'
+    end
   end
 end

@@ -1,4 +1,3 @@
-%li.category{:id => "shop_category_#{category.id}", :'data-id' => category.id, :'data-title' => category.title}
-  %span.title= category.title
-  .actions
-    %span.delete
+- form_for :shop_category, :url => admin_shop_categories_path(:format => 'js'), :html => { :method => "post", :multipart => true, :id => 'shop_category_form' } do |f|
+  #shop_category_fields
+    = render '/admin/shop/categories/fields', :f => f

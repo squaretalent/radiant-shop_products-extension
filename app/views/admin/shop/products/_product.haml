@@ -1,7 +1,10 @@
-%li.product{:id => "shop_product_#{product.id}", :'data-id' => product.id, :'data-title' => product.title}
-  %span.price= product.price
-  %img.image{ :src => '/images/admin/placeholder.png'}
-  %span.title= product.title
-
-  .actions
-    %span.delete
+- form_for :shop_product, :url => admin_shop_products_path(:format => 'js'), :html => { :method => "post", :multipart => true, :target => 'shop_product_frame', :id => 'shop_product_form' } do |f|
+  #shop_product_fields
+    = render '/admin/shop/products/fields', :f => f
+  
+  #shop_product_details
+    = render '/admin/shop/products/details', :f => f
+  
+  #shop_product_actions
+    = f.submit
+    %a#shop_product_delete{:href => "#"} delete

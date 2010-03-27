@@ -1,4 +1,7 @@
-= f.hidden_field :id
+= hidden_field_tag '_method', nil, :id => 'shop_product_method'
+= f.hidden_field :id, :class => 'clearable'
+= f.hidden_field :category_id, :class => 'clearable'
+
 = f.text_field :title, :class => 'clearable'
 = f.label :price, '$', :id => 'shop_product_price_label'
 = f.text_field :price, :class => 'clearable'
@@ -10,11 +13,11 @@
       %th.label
         = f.label :handle
       %td.field
-        = f.text_field :handle
+        = f.text_field :handle, :class => 'clearable'
     %tr
       %th.label
         = f.label :sku
       %td.field
-        = f.text_field :sku
+        = f.text_field :sku, :class => 'clearable'
 %p.more_or_less
   %a{:href=>'#extended_metadata',:class => "rounded_bottom_right rounded_bottom_left #{(meta_errors? ? 'more' : 'less')}"}= meta_label

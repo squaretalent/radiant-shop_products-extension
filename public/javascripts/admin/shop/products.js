@@ -10,7 +10,10 @@ document.observe("dom:loaded", function() {
     '#shop_categories .delete': ShopCategories.Destroy,
     '#shop_categories .category': ShopCategories.List,
     '#shop_category_form': ShopCategories.Form,
+    
     '#shop_products .product': ShopProducts.List,
+    '#shop_product_form': ShopProducts.Form,
+    '#shop_product_delete': ShopProducts.Destroy,
     
     '#shop_product_details': TabControlBehavior()
   });
@@ -24,8 +27,10 @@ ShopCategories.List = Behavior.create({
 
 ShopCategories.Destroy = Behavior.create({
   onclick : function() {
-    shop.CategoryDestroy(this.element.up('.category'));
-    shop.CategorySelect($('shop_category_create'));
+    if(confirm("Really Delete Category?")) {
+      shop.CategoryDestroy(this.element.up('.category'));
+      shop.CategorySelect($('shop_category_create'));
+    }
     return false;
   }
 });
@@ -40,6 +45,23 @@ ShopCategories.Form = Behavior.create({
 ShopProducts.List = Behavior.create({
   onclick : function(e) {
     shop.ProductSelect(this.element);
+  }
+});
+
+ShopProducts.Form = Behavior.create({
+  onsubmit : function(e) {
+    shop.ProductSubmit(this.element);
+    return false;
+  }
+});
+
+ShopProducts.Destroy = Behavior.create({
+  onclick : function() {
+    if(confirm("Really Delete Product?")) {
+      shop.ProductDestroy($('shop_products_list').down('.current'));
+      shop.ProductSelect($('shop_product_create'));
+    }
+    return false;
   }
 });
 
@@ -59,17 +81,20 @@ var Shop = Class.create({
       $('shop_product_create').hide();
       $('shop_category_submit').value = 'create';
       $('shop_category_method').value = 'post';
-      $('shop_category_form').setAttribute('action', $('admin_shop_categories_path').value + '.js');
+      $('shop_category_form').setAttribute('action', urlify($('admin_shop_categories_path').value));
       
     } else {
+      showStatus("Loading...");
+      $('shop_category_id').value = element.readAttribute('data-id');
       $('shop_category_title').value = element.readAttribute('data-title');
       $('shop_category_submit').value = 'update';
       $('shop_category_method').value = 'put';
-      $('shop_category_form').setAttribute('action', $('admin_shop_categories_path').value + '/' + element.readAttribute('data-id') + '.js');
+      $('shop_category_form').setAttribute('action', urlify($('admin_shop_categories_path').value,element.readAttribute('data-id')));
       
       new Ajax.Request(urlify($('admin_shop_categories_path').value, element.readAttribute('data-id') + '/products'), { 
         method: 'get',
         onSuccess: function(data) {
+          setStatus("Finished!"); 
           
           // Ready to show UI
           $('shop_category').show();
@@ -79,7 +104,8 @@ var Shop = Class.create({
           $('shop_products_list').innerHTML = data.responseText;
           
           // Select First Product
-          this.ProductSelect($('shop_products_list').down('.product'));
+          this.ProductSelect($('shop_product_create'));
+          hideStatus();
         }.bind(this),
       });
     }
@@ -89,11 +115,15 @@ var Shop = Class.create({
     this.data = element.serialize(true);
     this.element = element;
     
+    if(this.data._method == 'post') { showStatus('Creating...'); }
+    else { showStatus('Saving...'); }
+    
     new Ajax.Request(element.action + '?' + new Date().getTime(), { 
       method: this.data._method,
       parameters: this.data,
       onSuccess: function(data) {
         this.response = data.responseText;
+        hideStatus();
         
         if(this.data._method == 'post') { this.CategoryCreate(); } 
         else { this.CategoryUpdate(); }
@@ -117,20 +147,23 @@ var Shop = Class.create({
     element = element.replace(this.response); 
     
     // element is still the old item, but the id is the same as the new, so call on that id
-    ShopCategories.List.attach($(element.id));
-    this.CategorySelect($(element.id));
+    $(element.id).addClassName('current');
+    $(element.id).stopObserving('click');
   },
   
   CategoryDestroy: function(element) {
+    showStatus('Deleting...');
     element.hide();
     new Ajax.Request(urlify($('admin_shop_categories_path').value, element.readAttribute('data-id')), { 
       method: 'delete',
       onSuccess: function(data) {
         element.remove();
+        hideStatus();
       }.bind(this),
       onFailure: function(data) {
         element.show();
         alert(data.responseText);
+        hideStatus();
       }.bind(this)
     });
   },
@@ -157,38 +190,89 @@ var Shop = Class.create({
     element.addClassName('current');
     
     $('shop_product_alt').hide();
-    if(element.getAttribute('data-id') == '') {
     
+    $('shop_product_category_id').value = $('shop_category_id').value;
+    
+    if(element.getAttribute('data-id') == '') {
       $('shop_product').show();
       $('shop_product_submit').value = 'create';
-    
+      $('shop_product_method').value = 'post';
+      $('shop_product_form').setAttribute('action', urlify($('admin_shop_products_path').value));
     } else {
-
+      showStatus("Loading...");
       new Ajax.Request(urlify($('admin_shop_products_path').value,element.readAttribute("data-id")), { 
         method: 'get',
         onSuccess: function(data) {
-          this.response = data.responseText.evalJSON();
+          setStatus("Finished!");
+          this.response = data.responseText;
           
-          // Update product form
-          $('shop_product_title').value = this.response.title;
-          $('shop_product_price').value = this.response.price;
-          $('shop_product_handle').value = this.response.handle;
-          $('shop_product_sku').value = this.response.sku;
+          $('shop_product').innerHTML = this.response;
+          
           $('shop_product_submit').value = 'update';
-        
-
+          $('shop_product_method').value = 'put';
+          $('shop_product_form').setAttribute('action', urlify($('admin_shop_products_path').value, element.readAttribute('data-id')));
+          
           $('shop_product').show();
+          hideStatus();
         }.bind(this),
       });
     }
   },
   
-  ProductCreate: function() {
-    // Call back from controller create
+  ProductSubmit: function(element) {
+    this.data = element.serialize(true);
+    this.element = element;
+    
+    if(this.data._method == 'post') { showStatus("Creating..."); }
+    else { showStatus("Saving..."); }
+    
+    new Ajax.Request(element.action + '?' + new Date().getTime(), { 
+      method: this.data._method,
+      parameters: this.data,
+      onSuccess: function(data) {
+        this.response = data.responseText;
+        hideStatus();
+
+        if(this.data._method == 'post') { this.ProductCreate(); } 
+        else { this.ProductUpdate(); }
+      }.bind(this),
+    });
+  },
+  
+  ProductCreate: function() {  
+    $('shop_products_list').insert({'top': this.response});
+
+    var element = $('shop_products_list').down();
+
+    ShopProducts.List.attach(element);
+    this.ProductSelect(element);
   },
   
   ProductUpdate: function(element) {
-    // Call back from controller update
+    // Explained in CategoryUpdate
+    var element = $('shop_products_list').down('.current');
+    
+    element = element.replace(this.response); 
+    
+    $(element.id).addClassName('current');
+    $(element.id).stopObserving('click');
+  },
+  
+  ProductDestroy: function(element) {
+    showStatus('Deleting...')
+    element.hide();
+    new Ajax.Request(urlify($('admin_shop_products_path').value, element.readAttribute('data-id')), { 
+      method: 'delete',
+      onSuccess: function(data) {
+        element.remove();
+        hideStatus();
+      }.bind(this),
+      onFailure: function(data) {
+        element.show();
+        alert(data.responseText);
+        hideStatus();
+      }.bind(this)
+    });
   },
   
   ProductClear: function() {

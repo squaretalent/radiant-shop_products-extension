@@ -1,0 +1,7 @@
+%li.product{:id => "shop_product_#{excerpt.id}", :'data-id' => excerpt.id, :'data-title' => excerpt.title}
+  %span.price= number_to_currency excerpt.price
+  %img.image{ :src => '/images/admin/placeholder.png'}
+  %span.title= excerpt.title
+
+  .actions
+    %span.delete
