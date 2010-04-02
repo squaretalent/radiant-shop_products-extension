@@ -1,0 +1,4 @@
+- if @page.class_name == "ShopCategoryPage"
+  %p
+    %label{:for => 'page_shop_category_id'} Gallery
+    = collection_select :page, :shop_category_id, ShopCategory.all, :id, :title
