@@ -1,3 +1,9 @@
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/shop_products_page_extensions"
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/shop_product_page_extensions"
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/shop_category_page_extensions"
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/shop_product_extensions"
+require_dependency "#{File.expand_path(File.dirname(__FILE__))}/lib/shop_category_extensions"
+
 class ShopProductsExtension < Radiant::Extension
   version "0.2"
   description "Describe your extension here"
@@ -17,7 +23,7 @@ class ShopProductsExtension < Radiant::Extension
     Asset.class_eval { include AssetShopProductImagesAssociations } #we want these images to be assets
         
     tab 'Shop' do
-      add_item 'Products', '/admin/shop/products'
+      add_item 'Products', '/admin/shop/categories'
     end
     
     admin.page.edit.add :layout_row, 'shop_category' if admin.respond_to?(:page)
