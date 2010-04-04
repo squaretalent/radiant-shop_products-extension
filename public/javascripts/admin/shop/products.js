@@ -13,9 +13,7 @@ document.observe("dom:loaded", function() {
     
     '#shop_products .product': ShopProducts.List,
     '#shop_product_form': ShopProducts.Form,
-    '#shop_product_delete': ShopProducts.Destroy,
-    
-    '#shop_product_details': TabControlBehavior()
+    '#shop_product_delete': ShopProducts.Destroy
   });
 });
 

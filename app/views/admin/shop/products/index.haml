@@ -1,10 +1,12 @@
+- body_classes << 'reversed'
 - @page_title = 'Shop Products - ' + default_page_title
 = render '/admin/shop/products/head'
 
+%h1 Shop Products
+
 #shop_categories_content
 
-  %h2 Categories
-  %p Products within your shop are organised in categories
+  %p Categories group products
   
   #shop_categories
     #shop_category_create.category{:'data-id' => ''}
@@ -25,7 +27,6 @@
   
 #shop_products_content
 
-  %h2 Products
   %p Click on a product to see more details
   
   #shop_products

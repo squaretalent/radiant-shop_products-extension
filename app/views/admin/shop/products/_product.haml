@@ -6,5 +6,8 @@
     = render '/admin/shop/products/details', :f => f
   
   #shop_product_actions
-    = f.submit
-    %a#shop_product_delete{:href => "#"} delete
+    %p.buttons
+      = f.submit
+      - unless @shop_product.nil?
+        or 
+        %a#shop_product_delete{:href => "#"} delete

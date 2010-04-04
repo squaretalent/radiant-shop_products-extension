@@ -1,0 +1,4 @@
+- if @page.class_name == "ShopProductPage"
+  %p
+    %label{:for => 'page_shop_product_id'} Product
+    = collection_select :page, :shop_product_id, ShopProduct.all, :id, :title

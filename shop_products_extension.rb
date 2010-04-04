@@ -1,14 +1,19 @@
-# Uncomment this if you reference any of your controllers in activate
-# require_dependency 'application_controller'
-
 class ShopProductsExtension < Radiant::Extension
-  version "0.1"
+  version "0.2"
   description "Describe your extension here"
   url "http://github.com/squaretalent/radiant-shop_products-extension"
   
+  define_routes do |map|
+    map.namespace 'shop' do |shop|
+      shop.connect ':handle', :controller => 'categories', :action => 'show'
+      shop.connect ':category_handle/:handle', :controller => 'products', :action => 'show'
+    end
+  end
+  
   def activate
-    Page.class_eval { include ShopProductTags, ShopCategoryTags }
-    ShopProduct.class_eval { include ShopProductImagesAssociations } #we want products to have images
+    Page.class_eval { include ShopProductTags, ShopCategoryTags, ShopProductsPageExtensions }
+    ShopProduct.class_eval { include ShopProductExtensions } #we want products to have images and slugs
+    ShopCategory.class_eval { include ShopCategoryExtensions } #we want products to have layouts and slugs
     Asset.class_eval { include AssetShopProductImagesAssociations } #we want these images to be assets
         
     tab 'Shop' do
@@ -16,5 +21,10 @@ class ShopProductsExtension < Radiant::Extension
     end
     
     admin.page.edit.add :layout_row, 'shop_category' if admin.respond_to?(:page)
+    admin.page.edit.add :layout_row, 'shop_product' if admin.respond_to?(:page)
+
+    # If our RadiantConfig settings are blank, set them up now
+    Radiant::Config['shop.product_layout'] ||= 'ShopProduct'
+    Radiant::Config['shop.category_layout'] ||= 'ShopCategory'
   end
 end

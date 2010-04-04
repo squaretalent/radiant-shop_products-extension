@@ -20,21 +20,30 @@ module ShopCategoryTags
   end
 
   tag 'shop:category' do |tag|
-    tag.locals.shop.category = find_shop_category(tag)
-    tag.expand unless tag.locals.shop.category.nil?
+    tag.locals.shop_category = find_shop_category(tag)
+    tag.expand unless tag.locals.shop_category.nil?
   end
   
   [:title, :handle].each do |symbol|
     tag "shop:category:#{symbol}" do |tag|
-      unless tag.locals.shop.category.nil?
-        hash = tag.locals.shop.category
+      unless tag.locals.shop_category.nil?
+        hash = tag.locals.shop_category
         hash[symbol]
       end
     end
   end
+
+  tag 'shop:category:link' do |tag|
+    options = tag.attr.dup
+    anchor = tag.locals.shop_category.slug
+    attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
+    attributes = " #{attributes}" unless attributes.empty?
+    text = tag.double? ? tag.expand : tag.render('title')
+    %{<a href="#{anchor}"#{attributes}>#{text}</a>}
+  end
   
   tag 'shop:category:slug' do |tag|
-    tag.locals.shop.category.slug unless tag.locals.shop.category.nil?
+    tag.locals.shop_category.slug unless tag.locals.shop_category.nil?
   end
   
   tag 'shop:category:if_products' do |tag|
@@ -50,8 +59,8 @@ module ShopCategoryTags
 protected
 
   def find_shop_category(tag)
-    if tag.locals.shop.category
-      tag.locals.shop.category
+    if tag.locals.shop_category
+      tag.locals.shop_category
     elsif tag.attr['id']
       ShopCategory.find(tag.attr['id'])
     elsif tag.attr['handle']
