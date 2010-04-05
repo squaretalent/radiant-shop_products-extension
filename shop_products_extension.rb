@@ -23,7 +23,7 @@ class ShopProductsExtension < Radiant::Extension
     Asset.class_eval { include AssetShopProductImagesAssociations } #we want these images to be assets
         
     tab 'Shop' do
-      add_item 'Products', '/admin/shop/categories'
+      add_item 'Products', '/admin/shop/products/categories'
     end
     
     admin.page.edit.add :layout_row, 'shop_category' if admin.respond_to?(:page)
