@@ -38,15 +38,14 @@ class ShopProductsExtension < Radiant::Extension
     
     ShopCategory.class_eval { include ShopCategoryExtensions } #we want products to have layouts and slugs
     Admin::Shop::Products::CategoriesController.send( :include, ShopCategoriesExtensions )
-
-        
+    
     tab 'shop' do
       add_item 'Products', '/admin/shop' #will redirect to shop_products
     end
     
     admin.page.edit.add :layout_row, 'shop_category' if admin.respond_to?(:page)
     admin.page.edit.add :layout_row, 'shop_product' if admin.respond_to?(:page)
-
+    
     # If our RadiantConfig settings are blank, set them up now
     Radiant::Config['shop.product_layout'] ||= 'ShopProduct'
     Radiant::Config['shop.category_layout'] ||= 'ShopCategory'
