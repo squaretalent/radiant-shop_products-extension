@@ -25,7 +25,7 @@
       %tbody
         - if @shop_categories.empty?
           %tr
-            %td.empty{:colspan => admin.shop_products.index.node.length}= t('no_categories')
+            %td.empty{:colspan => admin.products.index.thead.length}= t('no_categories')
         - else
           = render :partial => '/admin/shop/categories/node', :collection => @shop_categories
   #actions
