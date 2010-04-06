@@ -1,20 +1,43 @@
-%p.title
-  = hidden_field_tag '_method', nil, :id => 'shop_product_method'
-  = hidden_field_tag 'page_part_index_field', 0
-  = f.hidden_field :id, :class => 'clearable'
-  = f.hidden_field :category_id, :class => 'clearable'
+= render_region :form_top
 
-  = f.text_field :title, :class => 'clearable'
+- render_region :form do |form|
+  - form.edit_title do
+    %p.title
+      %label{:for => 'shop_product_title'}= t('title')
+      = fields.text_field :title, :class => 'textbox', :maxlenth => 255
   
-.drawer
-  .drawer_contents
-    %ul
-      %li
-        = f.label :price
-        = f.text_field :price, :class => 'clearable'
-      %li
-        = f.label :handle
-        = f.text_field :handle, :class => 'clearable'
-      %li
-        = f.label :sku
-        = f.text_field :sku, :class => 'clearable'
+  - form.edit_extended_metadata do
+    .drawer
+      .drawer_contents#attributes
+        %table.fieldset
+          = render :partial => 'meta_row', :collection => @meta, :locals => { :f => fields }
+          = render :partial => 'meta_row_category', :locals => { :f => fields }
+          = render_region :extended_metadata, :locals => { :f => fields }
+      .drawer_handle
+        %a.toggle{:href=>'#attributes', :rel=>"toggle[attributes]", :class=>"#{(meta_errors? ? 'less' : 'more')}"}= meta_label
+    
+  - form.edit_content do 
+    #tab_control
+      #tabs.tabs
+        #tab_toolbar
+      #pages.pages
+        = hidden_field_tag 'page_part_index_field' #important
+        = render :partial => 'part', :collection => @parts
+    
+- render_region :form_bottom do |form_bottom|
+  - form_bottom.edit_buttons do
+    - @buttons_partials.each do |partial|
+      = render :partial => partial, :locals => {:f => fields}
+    %p.buttons{:style=>"clear: left"}
+      = save_model_button(@shop_product)
+      = save_model_and_continue_editing_button(@shop_product)
+      = t('or')
+      = link_to t('cancel'), admin_shop_products_url
+  - form_bottom.edit_timestamp do
+    =# updated_stamp @shop_product
+    
+#routes{:style => 'display:none'}
+
+  = hidden_field_tag 'admin_shop_product_assets_path', admin_shop_product_assets_path(@shop_product)
+  = hidden_field_tag 'admin_shop_product_images_path', admin_shop_product_images_path(@shop_product)
+  = hidden_field_tag 'admin_shop_product_images_sort_path', admin_shop_product_images_sort_path(@shop_product)

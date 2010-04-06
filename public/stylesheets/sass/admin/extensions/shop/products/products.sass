@@ -1,0 +1,225 @@
+!line_height            = 18px
+
+.drawer_contents th.label
+  :white-space            nowrap
+  
+.tabs .close
+  :display                none
+
+#edit_shop_product
+  :width                  70%
+  
+#content
+  :position               relative
+  
+#popups
+  :display                none
+  
+#images_list
+  :overflow               hidden
+  :padding
+    :top                = !line_height*0.75
+
+  li.image
+    :float                left
+    :padding            = !line_height
+    :height             = !line_height*6
+    :width              = !line_height*6
+    :margin
+      :right            = !line_height*0.5
+    :border-radius        6px
+    :-moz-border-radius   6px
+    :-webkit-border-radius 6px
+    :cursor               move
+      
+    *
+      :vertical
+        :align            middle
+
+    .wrapper
+      :display            table-cell
+      :height           = !line_height*6
+      :width            = !line_height*6
+      :text
+        :align            center
+      :vertical
+        :align            middle
+
+    img.image
+      :width            = !line_height*6
+      
+    .actions
+      :position           absolute
+      :display            block
+      :width              100%
+      :top                0
+      :left               0
+      
+      .delete
+        :position         absolute
+        :right            5px
+        :top              8px
+        :width            20px
+        :height           20px
+        :overflow         hidden
+        :display          block
+        :cursor           pointer
+        :background
+          :image          url('/images/admin/remove_disabled.png')
+          :repeat         no-repeat
+          :position       0 0
+        :cursor           pointer
+          
+        &:hover
+          :background
+            :image        url('/images/admin/remove.png')
+
+    &:first-child
+      :padding          = !line_height*0.5
+        :top            = !line_height
+      :width            = !line_height*7
+      :height           = !line_height*6.5
+    
+      img.image
+        :border
+          :width          2px
+          :color        = #999999
+          :style          solid
+        :width          = !line_height*6.5
+  
+    &:hover
+      :background
+        :color            #f9f6ef
+
+#sidebar
+  :position               absolute
+  :right                  0
+  :top                    55px
+  :width                  30%
+  
+  .title
+    :color                whiteSmoke
+    :text
+      :shadow             1px 1px 0px #888888
+      
+  #create_image
+    :position             absolute
+    :right                10px
+    :top                  10px
+  
+  .button a
+    :background           #eeeeee url(../../images/admin/buttons_background.png) repeat-x
+    :color                #333333
+    :font
+      :size               80%
+    :padding              8px 12px
+    :text
+      :decoration         none
+    :text
+      :shadow             1px 1px 1px #eeeeee
+    :border-radius        5px
+    :-moz-border-radius   5px
+    :-webkit-border-radius 5px
+    :cursor               pointer
+  
+    &:hover
+      :background         #ffffff
+      :color              #000000
+      :text
+        :shadow           1px 1px 1px #ffffff
+        
+#assets_list
+  :padding
+    :bottom               10px
+
+  li.asset
+    :position             relative
+    :display              block
+    :height             = !line_height*4
+    :padding            = !line_height*0.5
+    :margin
+      :right              10px
+    :border-radius        6px
+    :-moz-border-radius   6px
+    :-webkit-border-radius 6px
+    :cursor               pointer
+
+    *
+      :vertical
+        :align            middle
+
+    .wrapper
+      :display            table-cell
+      :height           = !line_height*4
+      :width            = !line_height*4
+      :text
+        :align            center
+      :vertical
+        :align            middle
+
+      img.image
+        :width          = !line_height*4
+
+    .title
+      :position           absolute
+      :top              = !line_height*0.5
+      :left             = !line_height*5
+
+    .caption
+      :position           absolute
+      :top                46px
+      :left             = !line_height*5
+      :font
+        :size             12px
+
+    &:hover
+      :background
+        :color            #888888        
+        
+#asset_popup
+  :color                  #333333
+  
+  .popup_content
+    :position             relative
+  
+  h3.title
+    :margin
+      :top                0
+    :padding            = !line_height*0.5
+    :background
+      :color              #e0f0ff
+    :border
+      :bottom
+        :width            1px
+        :style            solid
+        :color            #d3f0e4
+  
+  ol
+    :padding            = !line_height*0.5
+      
+    li
+      :overflow           hidden
+      :padding
+        :bottom         = !line_height
+      
+    label
+      :display            block
+      :float              left
+      :width              70px
+      
+    input[type=text]
+      :float              left
+    
+  #asset_submit
+    :position             absolute
+    :right              = !line_height*0.5
+    :bottom             = !line_height*0.5
+  
+  #asset_popup_close
+    :position             absolute
+    :left               = !line_height*0.5
+    :bottom             = !line_height*0.5
+    
+  #asset_frame
+    :visibility           hidden
+    :height               0

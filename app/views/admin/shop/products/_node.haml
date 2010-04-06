@@ -1,0 +1,6 @@
+%tr.node.page.level_2{:id => "shop_product_#{node.id}"}
+  %td.page{ :colspan => 3, :style => 'padding-left: 32px;' }
+    %a{ :href => edit_admin_shop_product_path(node), :title => node.title}
+      = image('page', :class => "icon", :alt => '', :title => '')
+      %span.title= node.title
+  %td.remove= link_to t('remove'), remove_admin_shop_product_url(node)

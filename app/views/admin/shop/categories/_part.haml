@@ -1,0 +1,3 @@
+.page{:id => "shop_category_#{part[:title].to_slug}", 'data-caption'=>h(part[:title])}
+  .part{:id => "shop_category-part-#{part[:title].to_slug}"}
+    = render :partial => "admin/shop/categories/parts/#{part[:title]}", :locals => { :part => part }

@@ -1,0 +1,13 @@
+- include_stylesheet 'admin/extensions/shop/products/forms'
+
+- @page_title = @shop_category.title + ' - ' + default_page_title
+
+- render_region :main do |main|
+  - main.edit_header do
+    %h1= t('edit_category')    
+  - main.edit_form do
+    - form_for :shop_category, @shop_category, :url => admin_shop_category_path(@shop_category), :html => {:method => :put, :multipart => true, :id => 'edit_shop_category', 'data-onsubmit_status'=>"Saving Changes&#8230;"} do |f|
+      = render :partial => 'fields', :object => f
+  - main.edit_popups do
+    #sidebar
+      = render 'popup'

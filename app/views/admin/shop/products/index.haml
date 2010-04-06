@@ -1,41 +1,32 @@
-- body_classes << 'reversed'
-- @page_title = 'Shop Products - ' + default_page_title
-= render '/admin/shop/products/head'
+- @page_title = t('products') + ' - ' + default_page_title
 
-%h1 Shop Products
-
-#shop_categories_content
-
-  %p Categories group products
-  
-  #shop_categories
-    #shop_category_create.category{:'data-id' => ''}
-      %span.title New Category
-    %ul#shop_categories_list
-      = render :partial => '/admin/shop/categories/excerpt', :collection => @shop_categories
-  
-  #shop_products_categories
-  
-    #shop_category
-      = render :partial => '/admin/shop/categories/category'
-  
-    #shop_product
-      = render :partial => '/admin/shop/products/product'
-      
-    #shop_product_alt
-      %span.note Once you have created a category you can add products
-  
-#shop_products_content
-
-  %p Click on a product to see more details
-  
-  #shop_products
-    #shop_product_create.product{:'data-id' => ''}
-      %span.title New Product
-    #shop_products_alt.product{:'data-id' => ''}
-      %span.title Select a Category
-      %sapn.caption Get started by selecting a category
-    %ul#shop_products_list
-      
-#shop_products_routes
-  = render '/admin/shop/products/routes'
+.outset
+  = render_region :top
+  %table#site_map.index{:summary=>"Shop Categories created for the site"}
+    - render_region :thead do |thead|
+      %thead
+        %tr
+          - thead.title_header do
+            %th.page= t('category') 
+          - thead.description_header do
+            %th.description= t('description')
+          - thead.modify_header do
+            %th.modify{:colspan=>'2'}= t('modify')
+    - render_region :tbody do |tbody|
+      - tbody.cat_thumbnail_cell do; end
+      - tbody.cat_title_cell do; end
+      - tbody.cat_description_cell do; end
+      - tbody.cat_add_product_cell do; end
+      - tbody.cat_remove_cell do; end
+      - tbody.prod_thumbnail_cell do; end
+      - tbody.prod_title_cell do; end
+      - tbody.prod_description_cell do; end
+      - tbody.prod_remove_cell do; end
+      %tbody
+        - if @shop_categories.empty?
+          %tr
+            %td.empty{:colspan => admin.shop_products.index.node.length}= t('no_categories')
+        - else
+          = render :partial => '/admin/shop/categories/node', :collection => @shop_categories
+  #actions
+    = render 'bottom'

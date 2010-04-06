@@ -1,0 +1,10 @@
+%tr
+  %th.label
+    %label{:for=>"shop_category[#{:custom_layout}"}= t('custom_layout')
+  %td.field
+    = f.collection_select :custom_layout, Layout.all, :name, :name, :prompt => 'Optional...'
+%tr
+  %th.label
+    %label{:for=>"shop_category[#{:custom_product_layout}"}= t('custom_product_layout')
+  %td.field
+    = f.collection_select :custom_product_layout, Layout.all, :name, :name, :prompt => 'Optional...'

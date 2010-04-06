@@ -1,0 +1,10 @@
+- include_stylesheet 'admin/extensions/shop/products/forms'
+
+- render_region :main do |main|
+  - main.edit_header do
+    %h1= t('new_category')    
+  - main.edit_form do
+    - form_for :shop_category, @shop_category, :url => admin_shop_categories_path, :html => {:id => 'new_shop_category', :multipart => true, 'data-onsubmit_status'=>"Creating Category&#8230;"} do |f|
+      = render :partial => 'fields', :object => f
+  - main.edit_popups do
+    = render 'popup'

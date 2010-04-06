@@ -11,7 +11,7 @@ module ShopCategoryExtensions
       end
       
       def product_layout
-        result = custom_product_layout.blank? ? Radiant::Config['shop.product_layout'] : custom_layout
+        result = custom_product_layout.blank? ? Radiant::Config['shop.product_layout'] : custom_product_layout
       end
     }
   end

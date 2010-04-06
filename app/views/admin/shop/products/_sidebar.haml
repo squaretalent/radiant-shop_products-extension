@@ -1,0 +1,9 @@
+%p.title= t('images')
+
+%span.button#create_image
+  %a{:href => '#asset_popup', :class => 'popup'}= image('plus') + " " + t("new_image")
+
+%p.description
+  Click on an image to attach it to a product
+  
+%ul#assets_list

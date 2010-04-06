@@ -1,0 +1,6 @@
+%li.image{:id => "image_#{excerpt.id}", :'data-id' => excerpt.id}
+  .wrapper
+    %span.buffer
+    %img.image{:src => excerpt.image.thumbnail(:thumbnail), :alt => excerpt.image.title}
+  .actions
+    %span.delete

@@ -8,9 +8,10 @@ module ShopProductTags
     tag.expand
   end
   
+  desc %{ iterates through each product within the scope }
   tag 'shop:products:each' do |tag|
     content = ''
-    products = tag.locals.shop_category.products || ShopProduct.all
+    products = tag.locals.shop_category ? tag.locals.shop_category.products : ShopProduct.all
     
     products.each do |product|
       tag.locals.shop_product = product
@@ -24,7 +25,8 @@ module ShopProductTags
     tag.expand unless tag.locals.shop_product.nil?
   end
 
-  [:title, :handle, :price, :description].each do |symbol|
+  [:title, :handle, :description].each do |symbol|
+    desc %{ outputs the #{symbol} to the products generated page }
     tag "shop:product:#{symbol}" do |tag|
       unless tag.locals.shop_product.nil?
         hash = tag.locals.shop_product
@@ -33,6 +35,7 @@ module ShopProductTags
     end
   end
   
+  desc %{ generates a link to the products generated page }
   tag 'shop:product:link' do |tag|
     options = tag.attr.dup
     anchor = tag.locals.shop_product.slug
@@ -42,10 +45,12 @@ module ShopProductTags
     %{<a href="#{anchor}"#{attributes}>#{text}</a>}
   end
   
+  desc %{ outputs the slug to the products generated page }
   tag 'shop:product:slug' do |tag|
     tag.locals.shop_product.slug unless tag.locals.shop_product.nil?
   end
 
+  desc %{ output price of product }
   tag 'shop:product:price' do |tag|
     attr = tag.attr.symbolize_keys
     product = find_shop_product(tag)
@@ -64,6 +69,7 @@ module ShopProductTags
     tag.expand
   end
   
+  desc %{ iterates through each of the products images }
   tag 'shop:product:images:each' do |tag|
     content = ''
     product = find_shop_product(tag)
@@ -75,6 +81,7 @@ module ShopProductTags
     content
   end
   
+  desc %{ output a products image. Use id, title or position to find a specific one}
   tag 'shop:product:image' do |tag|
     attr = tag.attr.symbolize_keys
     image = find_shop_product_image(tag)
