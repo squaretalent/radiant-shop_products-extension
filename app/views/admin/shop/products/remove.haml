@@ -1,0 +1,12 @@
+%h1
+  = t('remove_product')
+
+%p
+  = t('text.remove_product.warning')
+
+- form_for [:admin, @shop_product.becomes(ShopProduct)], :html => {:method => :delete, 'data-onsubmit_status'=>"Removing Product&#8230;"} do
+  
+  %p.buttons
+    %input.button{:type=>"submit", :value => t('delete_product') }/
+    = t('or')    
+    = link_to t('cancel'), admin_shop_products_path

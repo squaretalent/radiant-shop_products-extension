@@ -1,0 +1,12 @@
+%h1
+  = t('remove_category')
+
+%p
+  = t('text.remove_category.warning')
+
+- form_for [:admin, @shop_category.becomes(ShopCategory)], :html => {:method => :delete, 'data-onsubmit_status'=>"Removing Category&#8230;"} do
+  
+  %p.buttons
+    %input.button{:type=>"submit", :value => t('delete_category') }/
+    = t('or')    
+    = link_to t('cancel'), admin_shop_categories_path

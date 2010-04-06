@@ -8,6 +8,8 @@ en:
   add_category: 'Add Category'
   new_category: 'New Shop Category'
   edit_category: 'Update Shop Category'
+  remove_category: 'This will delete the category'
+  delete_category: 'Delete Category'
   custom_layout: 'Layout'
   custom_product_layout: 'Product Layout'
   product: 'Product'
@@ -16,6 +18,8 @@ en:
   add_product: 'Add Product'
   new_product: 'New Shop Product'
   edit_product: 'Update Shop Product'
+  remove_product: 'This will delete the product'
+  delete_product: 'Delete Product'
   image: 'Image'
   images: 'Images'
   no_images: 'No Images'
@@ -23,3 +27,8 @@ en:
   new_image: 'New Image'
   caption: 'Caption'
   sku: 'SKU'
+  text:
+    remove_product:
+      warning: "Deleting a product is irreversible, make sure you're sure."
+    remove_category:
+      warning: "Deleting a category (and its products) is irreversible, make sure you're sure."
