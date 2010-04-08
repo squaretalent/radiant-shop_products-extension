@@ -9,6 +9,10 @@ module ShopProductExtensions
       def layout
         category.product_layout
       end
+      
+      def assets_available
+        Asset.search('', {:image => 1}) - self.assets
+      end
     }
   end
   

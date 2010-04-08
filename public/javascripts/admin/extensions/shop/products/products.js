@@ -25,7 +25,7 @@ var Shop = Class.create({
   
   ProductInitialize: function() {
     if($('shop_product_id')) {
-      this.ProductImageList();
+      this.ProductImagesSort();
     }
   },
   
@@ -42,22 +42,6 @@ var Shop = Class.create({
             'images':Sortable.serialize('images_list')
           }
         });
-      }.bind(this)
-    });
-  },
-  
-  ProductImageList: function(element) {
-    showStatus('Loading Images...');
-    new Ajax.Request(urlify($('admin_shop_product_images_path').value), {
-      method: 'get',
-      parameters: { 
-        'product_id' : $('shop_product_id').value
-      },
-      onSuccess: function(data) {   
-        setStatus('All Done');     
-        $('images_list').innerHTML = data.responseText;
-        this.ProductAssetList();
-        this.ProductImagesSort();
       }.bind(this)
     });
   },
@@ -101,22 +85,6 @@ var Shop = Class.create({
         element.show();
         hideStatus();
       }.bind(this)
-    });
-  },
-  
-  ProductAssetList: function() {
-    setStatus('Loading Everything Else...');
-    new Ajax.Request(urlify($('admin_shop_product_assets_path').value), {
-      method: 'get',
-      parameters: { 
-        'filter[image]' : 1,
-        'product_id' : $('shop_product_id').value
-      },
-      onSuccess: function(data) {   
-        setStatus('All Done');     
-        $('assets_list').innerHTML = data.responseText;
-        hideStatus();
-      }
     });
   },
   
