@@ -74,8 +74,8 @@ module ShopProductTags
     content = ''
     product = find_shop_product(tag)
     
-    product.images.each do |image|
-      tag.locals.shop_product_image = image
+    product.assets.each do |asset|
+      tag.locals.shop_product_image = asset.image
       content << tag.expand
     end
     content
