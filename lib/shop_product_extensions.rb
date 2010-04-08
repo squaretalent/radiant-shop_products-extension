@@ -11,7 +11,7 @@ module ShopProductExtensions
       end
       
       def assets_available
-        Asset.search('', {:image => 1}) - self.images
+        Asset.search('', {:image => 1}) - self.assets
       end
     }
   end

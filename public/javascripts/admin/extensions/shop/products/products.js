@@ -77,7 +77,6 @@ var Shop = Class.create({
       method: 'delete',
       onSuccess: function(data) {
         $('assets_list').insert({ 'bottom' : data.responseText });
-        shop.ProductAssetList();
         element.remove();
         hideStatus();
       }.bind(this),

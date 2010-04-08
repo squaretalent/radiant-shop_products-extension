@@ -74,8 +74,8 @@ module ShopProductTags
     content = ''
     product = find_shop_product(tag)
     
-    product.assets.each do |asset|
-      tag.locals.shop_product_image = asset.image
+    product.images.each do |image|
+      tag.locals.shop_product_image = image.asset
       content << tag.expand
     end
     content
@@ -117,10 +117,10 @@ protected
     elsif tag.attr['title']
       tag.locals.shop_product.images.find(:first, :conditions => {:title => tag.attr['title']})
     elsif tag.attr['position']
-      asset = tag.locals.shop_product.assets.find(:first, :conditions => {:position => tag.attr['position']})
+      image = tag.locals.shop_product.images.find(:first, :conditions => {:position => tag.attr['position']})
       
-      if asset
-        asset.image
+      if image
+        image.asset
       else
         nil
       end
