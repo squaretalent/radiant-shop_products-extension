@@ -4,6 +4,36 @@ module ShopProductTags
   
   class ShopProductTagError < StandardError; end
   
+  # Shop Category Tags
+  
+  tag 'shop:categories' do |tag|
+    tag.expand
+  end
+  
+  desc %{ iterates through each product category }
+  tag 'shop:categories:each' do |tag|
+    content = ''
+    categories = ShopCategory.all(:order => 'position DESC')
+    
+    categories.each do |category|
+      tag.locals.shop_category = category
+      content << tag.expand
+    end
+    content
+  end
+  
+  [:title, :handle, :description].each do |symbol|
+    desc %{ outputs the #{symbol} of the current product category }
+    tag "shop:category:#{symbol}" do |tag|
+      unless tag.locals.shop_category.nil?
+        hash = tag.locals.shop_category
+        hash[symbol]
+      end
+    end
+  end
+  
+  #Shop Product Tags
+  
   tag 'shop:products' do |tag|
     tag.expand
   end
