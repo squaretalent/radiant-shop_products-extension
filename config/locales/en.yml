@@ -26,6 +26,7 @@ en:
   add_image: 'Add Image'
   new_image: 'New Image'
   caption: 'Caption'
+  price: 'Price'
   sku: 'SKU'
   text:
     remove_product:

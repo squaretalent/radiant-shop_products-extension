@@ -13,7 +13,7 @@ module ShopProductsAdminUI
           products.edit = Radiant::AdminUI::RegionSet.new do |edit|
             edit.main.concat %w{edit_header edit_form edit_popups}
             edit.sidebar
-            edit.form.concat %w{edit_title edit_extended_metadata edit_content}
+            edit.form.concat %w{edit_title edit_extended_metadata edit_content edit_price}
             edit.form_bottom.concat %w{edit_buttons edit_timestamp}
           end
           products.new = products.edit

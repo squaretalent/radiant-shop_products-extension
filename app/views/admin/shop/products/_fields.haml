@@ -5,6 +5,11 @@
     %p.title
       %label{:for => 'shop_product_title'}= t('title')
       = fields.text_field :title, :class => 'textbox', :maxlenth => 255
+      
+  - form.edit_price do
+    %p.title
+      %label{:for => 'shop_product_price'}= t('price')
+      = fields.text_field :price, :class => 'textbox', :maxlenth => 255
   
   - form.edit_extended_metadata do
     .drawer
@@ -23,6 +28,7 @@
       #pages.pages
         = hidden_field_tag 'page_part_index_field' #important
         = render :partial => 'part', :collection => @parts
+        
     
 - render_region :form_bottom do |form_bottom|
   - form_bottom.edit_buttons do
