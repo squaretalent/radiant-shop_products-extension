@@ -1,6 +1,7 @@
 module ShopProductExtensions
   
   def self.included(base)
+    
     base.class_eval {
       def slug
         "/shop/product/#{handle}"

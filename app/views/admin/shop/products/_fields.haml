@@ -9,7 +9,7 @@
   - form.edit_price do
     %p.title
       %label{:for => 'shop_product_price'}= t('price')
-      = fields.text_field :price, :class => 'textbox', :maxlenth => 255
+      = fields.text_field :price, :class => 'textbox', :maxlenth => 255, :value => number_to_currency(@shop_product.price, :unit => '') 
   
   - form.edit_extended_metadata do
     .drawer
