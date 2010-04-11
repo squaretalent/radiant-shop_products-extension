@@ -14,7 +14,7 @@ module ShopCategoryTags
     categories = ShopCategory.all(:order => 'position DESC')
     
     categories.each do |category|
-      tag.locals.category = category
+      tag.locals.shop_category = category
       content << tag.expand
     end
     content
