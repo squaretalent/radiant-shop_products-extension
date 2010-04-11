@@ -8,9 +8,10 @@ module ShopCategoryTags
     tag.expand
   end
 
+  desc %{ iterates through each product category }
   tag 'shop:categories:each' do |tag|
     content = ''
-    categories = ShopCategory.all
+    categories = ShopCategory.all(:order => 'position DESC')
     
     categories.each do |category|
       tag.locals.category = category
@@ -24,7 +25,8 @@ module ShopCategoryTags
     tag.expand unless tag.locals.shop_category.nil?
   end
   
-  [:title, :handle].each do |symbol|
+  [:title, :handle, :description, :slug].each do |symbol|
+    desc %{ outputs the #{symbol} of the current product category }
     tag "shop:category:#{symbol}" do |tag|
       unless tag.locals.shop_category.nil?
         hash = tag.locals.shop_category
@@ -33,6 +35,7 @@ module ShopCategoryTags
     end
   end
 
+  desc %{ returns a link to the current category }
   tag 'shop:category:link' do |tag|
     options = tag.attr.dup
     anchor = tag.locals.shop_category.slug
@@ -41,17 +44,15 @@ module ShopCategoryTags
     text = tag.double? ? tag.expand : tag.render('title')
     %{<a href="#{anchor}"#{attributes}>#{text}</a>}
   end
-  
-  tag 'shop:category:slug' do |tag|
-    tag.locals.shop_category.slug unless tag.locals.shop_category.nil?
-  end
-  
+    
+  desc %{ runs if the curent category has products }
   tag 'shop:category:if_products' do |tag|
     category = find_shop_category(tag)
     tag.expand if category && !category.products.empty?
   end
   
-  tag 'shop:category:unless_items' do |tag|
+  desc %{ runs if the current category has no products }
+  tag 'shop:category:unless_products' do |tag|
     category = find_shop_category(tag)
     tag.expand if !category || category.products.empty?
   end
