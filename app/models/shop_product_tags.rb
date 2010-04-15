@@ -25,7 +25,7 @@ module ShopProductTags
     tag.expand unless tag.locals.shop_product.nil?
   end
 
-  [:title, :handle, :description].each do |symbol|
+  [:id, :title, :handle, :description].each do |symbol|
     desc %{ outputs the #{symbol} to the products generated page }
     tag "shop:product:#{symbol}" do |tag|
       unless tag.locals.shop_product.nil?
@@ -83,10 +83,10 @@ module ShopProductTags
   
   desc %{ output a products image. Use id, title or position to find a specific one}
   tag 'shop:product:image' do |tag|
-    attr = tag.attr.symbolize_keys
+    attrs = tag.attr.symbolize_keys
     image = find_shop_product_image(tag)
     
-    style = tag.attr[:style] || 'original'
+    style = attrs[:style] || 'original'
     
     image.thumbnail(style.to_sym) if image
   end
