@@ -69,6 +69,35 @@ module ShopProductTags
     tag.expand
   end
   
+  desc %{ 
+    Renders the containing elements if the product has 1 or more images
+    *Usage:*
+    <pre><code><r:shop:product:if_images>...</r:shop:product:if_images></code></pre>
+    }
+  tag 'shop:product:if_images' do |tag|
+    product = find_shop_product(tag)
+    
+    if product.images.count > 0
+      tag.expand
+    end
+    
+  end
+  
+  desc %{ 
+    Renders the containing elements if the product has no images 
+    *Usage:*
+    <pre><code><r:shop:product:unless_images>...</r:shop:product:unless_images></code></pre>
+    }
+  tag 'shop:product:unless_images' do |tag|
+    product = find_shop_product(tag)
+    
+    if product.images.count == 0
+      tag.expand
+    end
+    
+  end
+  
+  
   desc %{ iterates through each of the products images }
   tag 'shop:product:images:each' do |tag|
     content = ''
