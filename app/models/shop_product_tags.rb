@@ -110,7 +110,10 @@ module ShopProductTags
     content
   end
   
-  desc %{ output a products image. Use id, title or position to find a specific one}
+  desc %{ 
+    Outputs the location of a products image. By default the first image is used.
+    Use id, title or position to select a specific image.
+    }
   tag 'shop:product:image' do |tag|
     attrs = tag.attr.symbolize_keys
     image = find_shop_product_image(tag)
@@ -147,6 +150,8 @@ protected
       tag.locals.shop_product.images.find(:first, :conditions => {:title => tag.attr['title']})
     elsif tag.attr['position']
       image = tag.locals.shop_product.images.find(:first, :conditions => {:position => tag.attr['position']})
+    else
+      image = tag.locals.shop_product.images.find(:first)
       
       if image
         image.asset
