@@ -1,5 +1,5 @@
 %tr
   %th.label
-    %label{:for=>"shop_product[#{:category}"}= t('category')
+    %label{:for=>"shop_product[#{:eta}"}= t('category')
   %td.field
     = f.collection_select :category_id, ShopCategory.all, :id, :title

@@ -1,14 +1,14 @@
 %tr.node.page.level_0{:id => "shop_category_#{node.id}"}
-
-  %td.page
-    %a{ :href => edit_admin_shop_category_path(node), :title => node.title}
-      = image('page', :class => "icon", :alt => '', :title => '')
-      %span.title= node.title
-
-  %td.description= node.description
-
-  %td.add_child= link_to t('add_product'), admin_shop_category_new_product_url(node)
-
-  %td.remove= link_to t('remove'), remove_admin_shop_category_url(node)
-
-= render :partial => '/admin/shop/products/node', :collection => node.products
+  - render_region :category do |category|  
+    - category.category_title_cell do
+      %td.page
+        %a{ :href => edit_admin_shop_category_path(node), :title => node.title}
+          %span.title= node.title
+    - category.category_description_cell do
+      %td.description= node.description
+    - category.category_add_product_cell do
+      %td.add_child= link_to t('add_product'), admin_shop_category_new_product_url(node)
+    - category.category_remove_cell do
+      %td.remove= link_to t('remove'), remove_admin_shop_category_url(node)
+    - category.category_product_row do 
+      = render :partial => '/admin/shop/products/node', :collection => node.products

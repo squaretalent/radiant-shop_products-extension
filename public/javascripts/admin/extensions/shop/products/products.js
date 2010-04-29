@@ -71,7 +71,7 @@ var Shop = Class.create({
   },
   
   ProductImageDestroy: function(element) {
-    showStatus('Deleting Image...');
+    showStatus('Removing Image...');
     element.hide();
     new Ajax.Request(urlify($('admin_shop_product_images_path').value, element.readAttribute('data-id')), { 
       method: 'delete',

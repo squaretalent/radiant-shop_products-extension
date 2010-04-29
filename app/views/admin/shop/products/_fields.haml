@@ -9,7 +9,7 @@
   - form.edit_price do
     %p.title
       %label{:for => 'shop_product_price'}= t('price')
-      = fields.text_field :price, :class => 'textbox', :maxlenth => 255, :value => number_to_currency(@shop_product.price, :unit => '') 
+      = fields.text_field :price, :class => 'textbox', :maxlenth => 255, :value => number_to_currency(@shop_product.price, :unit => '', :delimiter => '') 
   
   - form.edit_extended_metadata do
     .drawer
@@ -17,6 +17,7 @@
         %table.fieldset
           = render :partial => 'meta_row', :collection => @meta, :locals => { :f => fields }
           = render :partial => 'meta_row_category', :locals => { :f => fields }
+          = render :partial => 'meta_row_eta', :locals => { :f => fields }
           = render_region :extended_metadata, :locals => { :f => fields }
       .drawer_handle
         %a.toggle{:href=>'#attributes', :rel=>"toggle[attributes]", :class=>"#{(meta_errors? ? 'less' : 'more')}"}= meta_label

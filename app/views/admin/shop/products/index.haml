@@ -1,27 +1,19 @@
+- include_stylesheet 'admin/extensions/shop/products/products'
+
 - @page_title = t('products') + ' - ' + default_page_title
 
 .outset
   = render_region :top
-  %table#site_map.index{:summary=>"Shop Categories created for the site"}
-    - render_region :thead do |thead|
-      %thead
-        %tr
+  %table#products_map.index{:summary=>"Shop Categories created for the site"}
+    %thead
+      %tr
+        - render_region :thead do |thead|
           - thead.title_header do
             %th.page= t('category') 
           - thead.description_header do
             %th.description= t('description')
           - thead.modify_header do
             %th.modify{:colspan=>'2'}= t('modify')
-    - render_region :tbody do |tbody|
-      - tbody.cat_thumbnail_cell do; end
-      - tbody.cat_title_cell do; end
-      - tbody.cat_description_cell do; end
-      - tbody.cat_add_product_cell do; end
-      - tbody.cat_remove_cell do; end
-      - tbody.prod_thumbnail_cell do; end
-      - tbody.prod_title_cell do; end
-      - tbody.prod_description_cell do; end
-      - tbody.prod_remove_cell do; end
       %tbody
         - if @shop_categories.empty?
           %tr

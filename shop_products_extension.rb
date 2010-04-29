@@ -19,8 +19,10 @@ class ShopProductsExtension < Radiant::Extension
       admin.resources :shops, :as => 'shop', :only => [ :index ]
     end 
     map.namespace 'shop' do |shop|
-      shop.connect ':handle', :controller => 'categories', :action => 'show'
-      shop.connect ':category_handle/:handle', :controller => 'products', :action => 'show'
+      shop.product_search 'search.:format', :controller => 'products', :action => 'index', :conditions => { :method => :post }
+      shop.product_search 'search/:query.:format', :controller => 'products', :action => 'index', :conditions => { :method => :get }
+      shop.category ':handle.:format', :controller => 'categories', :action => 'show'
+      shop.product ':category_handle/:handle.:format', :controller => 'products', :action => 'show'
     end
   end
   

@@ -21,10 +21,8 @@ module ShopProductsAdminUI
             index.top
             index.bottom.concat %w{ add_category }
             index.thead.concat %w{ title_header description_header modify_header }
-            index.tbody.concat %w{
-              cat_thumbnail_cell cat_title_cell cat_description_cell cat_add_product_cell cat_remove_cell
-              prod_thumbnail_cell prod_title_cell prod_description_cell prod_remove_cell
-            }
+            index.category.concat %w{ category_title_cell category_description_cell category_add_product_cell category_remove_cell category_product_row }
+            index.product.concat %w{ product_title_cell product_description_cell product_remove_cell }
           end
           products.remove = products.index
         end
