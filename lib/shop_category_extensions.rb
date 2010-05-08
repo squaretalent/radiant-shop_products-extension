@@ -8,7 +8,7 @@ module ShopCategoryExtensions
       end
       
       def slug
-        "/shop/category/#{handle}"
+        "/shop/#{handle}"
       end
       
       def layout
