@@ -4,7 +4,7 @@ module ShopProductExtensions
     
     base.class_eval {
       def slug
-        "/shop/product/#{handle}"
+        "/shop/#{category.handle}/#{handle}"
       end
       
       def layout
