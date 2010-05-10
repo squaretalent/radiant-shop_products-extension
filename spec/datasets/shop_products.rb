@@ -8,7 +8,7 @@ class ShopProductsDataset < Dataset::Base
     
     products.each do |category, product|
       product.each do |title, price|
-        create_record :shop_product, "#{title}_#{category}".to_sym, :title => title, :handle => title, :sku => title, :price => price, :category_id => shop_categories(category)
+        create_record :shop_product, "#{title}_#{category}".to_sym, :title => title, :handle => title, :sku => title, :price => price, :category_id => shop_categories(category.to_sym)
       end
     end
   end
