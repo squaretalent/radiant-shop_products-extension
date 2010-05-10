@@ -1,9 +1,11 @@
 class Shop::CategoriesController < ApplicationController
-  radiant_layout 'ShopCategory'
+  skip_before_filter :verify_authenticity_token
+  
   no_login_required
+  radiant_layout Radiant::Config['shop.product_layout']
   
   def show
-    @shop_category=ShopCategory.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
+    @shop_category = ShopCategory.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
     
     if @shop_category
       attr_hash =  {

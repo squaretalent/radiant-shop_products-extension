@@ -1,13 +1,14 @@
 class Shop::ProductsController < ApplicationController
-  radiant_layout 'ShopProduct'
-  no_login_required
   skip_before_filter :verify_authenticity_token
+
+  no_login_required  
+  radiant_layout Radiant::Config['shop.product_layout']
   
   def index
     @shop_products = ShopProduct.search(params[:query])
 
     if @shop_products
-      @radiant_layout = "ShopProducts"
+      @radiant_layout = Radiant::Config['shop.category_layout']
 
       respond_to do |format|
         format.html { render }
@@ -21,8 +22,8 @@ class Shop::ProductsController < ApplicationController
   end
   
   def show
-    @shop_category=ShopCategory.find(:first, :conditions => ['LOWER(handle) = ?', params[:category_handle]])
-    @shop_product=ShopProduct.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
+    @shop_product = ShopProduct.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
+    @shop_category = @shop_product.category
     
     if @shop_product
       @title = @shop_product.title

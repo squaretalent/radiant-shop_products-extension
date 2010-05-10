@@ -1,5 +1,0 @@
-{"handle":"Guys","title":"Guys","id":1,
-"products":[
-  {"id":1,"price":"11.11","sku":"retro_fun","handle":"retro_fun","title":"Retro Fun T-Shirt","description":"This shirt is Retro Fun","category":{"id":1,"title":"Guys"}},
-  {"id":2,"price":"22.22","sku":"retro_boring","handle":"retro_boring","title":"Retro Boring T-Shirt","description":"This shirt is Retro Boring","category":{"id":1,"title":"Guys"}},
-]}
