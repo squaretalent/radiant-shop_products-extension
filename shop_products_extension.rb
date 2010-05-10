@@ -6,14 +6,14 @@ class ShopProductsExtension < Radiant::Extension
   define_routes do |map|   
     map.namespace :admin, :member => { :remove => :get } do |admin|
       admin.resources :shops, :as => 'shop', :only => [ :index ]
-    end 
-    map.namespace 'shop' do |shop|
-      shop.product_search 'search.:format', :controller => 'products', :action => 'index', :conditions => { :method => :post }
-      shop.product_search 'search/:query.:format', :controller => 'products', :action => 'index', :conditions => { :method => :get }
-      shop.categories 'categories', :controller => 'categories', :action => 'index'
-      shop.category ':handle.:format', :controller => 'categories', :action => 'show'
-      shop.product ':category_handle/:handle.:format', :controller => 'products', :action => 'show'
     end
+    
+    map.product_search  "#{Radiant::Config['shop.url_prefix']}/search.:format",                    :controller => 'shop/products',   :action => 'index', :conditions => { :method => :post }
+    map.product_search  "#{Radiant::Config['shop.url_prefix']}/search/:query.:format",             :controller => 'shop/products',   :action => 'index', :conditions => { :method => :get }    
+    map.shop_categories "#{Radiant::Config['shop.url_prefix']}/categories.:format",                :controller => 'shop/categories', :action => 'index', :conditions => { :method => :get }
+    map.shop_product    "#{Radiant::Config['shop.url_prefix']}/:category_handle/:handle.:format",  :controller => 'shop/products',   :action => 'show',  :conditions => { :method => :get }
+    map.shop_category   "#{Radiant::Config['shop.url_prefix']}/:handle.:format",                   :controller => 'shop/categories', :action => 'show',  :conditions => { :method => :get }
+        
   end
   
   def activate
@@ -36,7 +36,8 @@ class ShopProductsExtension < Radiant::Extension
     admin.page.edit.add :layout_row, 'shop_product' if admin.respond_to?(:page)
     
     # If our RadiantConfig settings are blank, set them up now
-    Radiant::Config['shop.product_layout'] ||= 'ShopProduct'
+    Radiant::Config['shop.url_prefix']      ||= 'shop'
+    Radiant::Config['shop.product_layout']  ||= 'ShopProduct'
     Radiant::Config['shop.category_layout'] ||= 'ShopCategory'
   end
 end

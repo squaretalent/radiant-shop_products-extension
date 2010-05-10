@@ -3,7 +3,7 @@ module ShopProducts
     def self.included(base)
       base.class_eval do
         def slug
-          "/shop/#{self.category.handle}/#{self.handle}"
+          self.slug_prefix + '/' + self.category.handle + '/' + self.handle
         end
       
         def layout
@@ -12,6 +12,10 @@ module ShopProducts
       
         def assets_available
           Asset.search('', {:image => 1}) - self.assets
+        end
+        
+        def slug_prefix
+          @prefix = Radiant::Config['shop.url_prefix'] == '' ? '' : '/' + Radiant::Config['shop.url_prefix']
         end
       end
     end
