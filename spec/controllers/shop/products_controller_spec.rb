@@ -2,10 +2,15 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Shop::ProductsController do
   dataset :shop_products
-    
+  
+  before(:each) do
+    @shop_product = shop_products(:white_bread)
+    @shop_products = [shop_products(:white_bread), shop_products(:wholemeal_bread), shop_products(:multigrain_bread)]
+  end
+  
   describe "index" do    
     it "should expose products list" do
-      ShopProduct.stub!(:search).and_return(shop_products)
+      ShopProduct.stub!(:search).and_return(@shop_products)
       get :index
       
       response.should be_success
@@ -21,7 +26,7 @@ describe Shop::ProductsController do
   
   describe "#show" do
     it "should expose product" do
-      ShopProduct.stub!(:find).and_return(shop_products(:white_bread))
+      ShopProduct.stub!(:find).and_return(@shop_product)
       get :show
       
       response.should be_success
