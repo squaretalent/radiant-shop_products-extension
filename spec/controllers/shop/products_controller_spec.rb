@@ -40,7 +40,7 @@ describe Shop::ProductsController do
     end
     
     it "should find a product by handle" do
-      get :show, :handle => shop_products(:white_bread).handle
+      get :show, :handle => @shop_product.handle
       
       response.should be_success
     end

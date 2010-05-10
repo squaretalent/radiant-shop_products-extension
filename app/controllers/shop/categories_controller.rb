@@ -4,6 +4,33 @@ class Shop::CategoriesController < ApplicationController
   no_login_required
   radiant_layout Radiant::Config['shop.product_layout']
   
+  # GET /shop/categories/:query
+  # GET /shop/categories/:query.js
+  # GET /shop/categories/:query.xml
+  # GET /shop/categories/:query.json                              AJAX and HTML
+  #----------------------------------------------------------------------------
+  def index
+    @shop_categories = ShopCategory.search(params[:query])
+    
+    unless @shop_categories.empty?
+      @radiant_layout = Radiant::Config['shop.category_layout']
+
+      respond_to do |format|
+        format.html { render }
+        format.js { render :partial => '/shop/categories/categories', :collection => @shop_categories }
+        format.xml { render :xml => @shop_categories.to_xml(attr_hash) }
+        format.json { render :json => @shop_categories.to_json(attr_hash) }
+      end
+    else
+      render :template => 'site/not_found', :status => 404
+    end
+  end
+  
+  # GET /shop/:category_handle
+  # GET /shop/:category_handle.js
+  # GET /shop/:category_handle.xml
+  # GET /shop/:category_handle.json                               AJAX and HTML
+  #----------------------------------------------------------------------------
   def show
     @shop_category = ShopCategory.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
     

@@ -10,6 +10,7 @@ class ShopProductsExtension < Radiant::Extension
     map.namespace 'shop' do |shop|
       shop.product_search 'search.:format', :controller => 'products', :action => 'index', :conditions => { :method => :post }
       shop.product_search 'search/:query.:format', :controller => 'products', :action => 'index', :conditions => { :method => :get }
+      shop.categories 'categories', :controller => 'categories', :action => 'index'
       shop.category ':handle.:format', :controller => 'categories', :action => 'show'
       shop.product ':category_handle/:handle.:format', :controller => 'products', :action => 'show'
     end

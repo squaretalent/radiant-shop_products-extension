@@ -23,5 +23,33 @@ describe Shop::CategoriesController do
       response.should render_template('site/not_found')
     end
   end
+
+  describe "#show" do
+    it "should expose category" do
+      ShopCategory.stub!(:find).and_return(@shop_category)
+      get :show
+
+      response.should be_success
+    end
+
+    it "should return 404 if product empty" do
+      ShopCategory.stub!(:find).and_return(nil)
+      get :show
+
+      response.should render_template('site/not_found')
+    end
+
+    it "should find a category by handle" do
+      get :show, :handle => @shop_category.handle
+
+      response.should be_success
+    end
+
+    it "should not find a category with an invalid handle" do
+      get :show, :handle => 'i-wont-exist'
+
+      response.should render_template('site/not_found')
+    end
+  end
   
 end

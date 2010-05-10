@@ -4,6 +4,11 @@ class Shop::ProductsController < ApplicationController
   no_login_required  
   radiant_layout Radiant::Config['shop.product_layout']
   
+  # GET /shop/search/:query
+  # GET /shop/search/:query.js
+  # GET /shop/search/:query.xml
+  # GET /shop/search/:query.json                                  AJAX and HTML
+  #----------------------------------------------------------------------------
   def index
     @shop_products = ShopProduct.search(params[:query])
     
@@ -12,15 +17,20 @@ class Shop::ProductsController < ApplicationController
 
       respond_to do |format|
         format.html { render }
-        format.js { render :partial => '/shop/products/products', :collection => @shop_product }
-        format.xml { render :xml => @shop_product.to_xml(attr_hash) }
-        format.json { render :json => @shop_product.to_json(attr_hash) }
+        format.js { render :partial => '/shop/products/products', :collection => @shop_products }
+        format.xml { render :xml => @shop_products.to_xml(attr_hash) }
+        format.json { render :json => @shop_products.to_json(attr_hash) }
       end
     else
       render :template => 'site/not_found', :status => 404
     end
   end
   
+  # GET /shop/:category_handle/:product_handle
+  # GET /shop/:category_handle/:product_handle.js
+  # GET /shop/:category_handle/:product_handle.xml
+  # GET /shop/:category_handle/:product_handle.json               AJAX and HTML
+  #----------------------------------------------------------------------------
   def show
     @shop_product = ShopProduct.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
     @shop_category = @shop_product.category unless @shop_product.nil?
