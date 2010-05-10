@@ -1,6 +1,8 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe Shop::ProductsController do
+  dataset :shop_products
+  
   before(:each) do 
     @bread = mock_model(ShopCategory, :title => 'bread', :handle => 'white_bread', :custom_layout => Radiant::Config['shop.category_layout'], :custom_product_layout => Radiant::Config['shop.product_layout'])
     @white_bread = mock_model(ShopProduct, :title => 'white bread', :handle => 'white_bread', :sku => 'white_bread', :price => 3.00, :category => @bread, :layout => Radiant::Config['shop.product_layout'])
@@ -43,9 +45,15 @@ describe Shop::ProductsController do
     end
     
     it "should find a product by handle" do
-      get :show, :handle => @shop_product.handle
+      get :show, :handle => shop_products(:white_bread).handle
       
       response.should be_success
+    end
+    
+    it "should not find a product with an invalid handle" do
+      get :show, :handle => 'i-wont-exist'
+      
+      response.should render_template('site/not_found')
     end
   end
   

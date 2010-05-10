@@ -1,0 +1,15 @@
+class ShopProductsDataset < Dataset::Base
+  uses :shop_categories
+  def load
+    products = {
+      :bread => { :white => 3.20, :wholemeal => 3.10, :multigrain => 3.00 },
+      :salad => { :green => 7.00, :ceasar => 9.00 }
+    }
+    
+    products.each do |category, product|
+      product.each do |title, price|
+        create_record :shop_product, "#{title.to_s}_#{category.to_s}".to_sym, :title => title.to_s, :handle => title.to_s, :sku => title.to_s, :price => price, :category_id => shop_categories(category)
+      end
+    end
+  end
+end
