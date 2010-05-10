@@ -3,11 +3,11 @@ module ShopProducts
     def self.included(base)
       base.class_eval do
         def slug
-          "/shop/#{self.category.handle}/#{handle}"
+          "/shop/#{self.category.handle}/#{self.handle}"
         end
       
         def layout
-          category.product_layout
+          self.category.product_layout
         end
       
         def assets_available

@@ -6,8 +6,8 @@ class Shop::ProductsController < ApplicationController
   
   def index
     @shop_products = ShopProduct.search(params[:query])
-
-    if @shop_products
+    
+    unless @shop_products.empty?
       @radiant_layout = Radiant::Config['shop.category_layout']
 
       respond_to do |format|
@@ -23,9 +23,9 @@ class Shop::ProductsController < ApplicationController
   
   def show
     @shop_product = ShopProduct.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
-    @shop_category = @shop_product.category
+    @shop_category = @shop_product.category unless @shop_product.nil?
     
-    if @shop_product
+    unless @shop_product.nil?
       @title = @shop_product.title
       @radiant_layout = @shop_product.layout
 
