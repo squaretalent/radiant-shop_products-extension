@@ -14,7 +14,7 @@ class Shop::CategoriesController < ApplicationController
     
     unless @shop_categories.empty?
       @radiant_layout = Radiant::Config['shop.category_layout']
-
+      
       respond_to do |format|
         format.html { render }
         format.js { render :partial => '/shop/categories/categories', :collection => @shop_categories }
@@ -26,10 +26,10 @@ class Shop::CategoriesController < ApplicationController
     end
   end
   
-  # GET /shop/:category_handle
-  # GET /shop/:category_handle.js
-  # GET /shop/:category_handle.xml
-  # GET /shop/:category_handle.json                               AJAX and HTML
+  # GET /shop/:handle
+  # GET /shop/:handle.js
+  # GET /shop/:handle.xml
+  # GET /shop/:handle.json                                        AJAX and HTML
   #----------------------------------------------------------------------------
   def show
     @shop_category = ShopCategory.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
@@ -42,7 +42,7 @@ class Shop::CategoriesController < ApplicationController
       
       @title = @shop_category.title
       @radiant_layout = @shop_category.layout
-
+      
       respond_to do |format|
         format.html { render }
         format.js { render :partial => '/shop/categories/category', :locals => { :category => @shop_category } }

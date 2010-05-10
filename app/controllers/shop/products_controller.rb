@@ -26,10 +26,10 @@ class Shop::ProductsController < ApplicationController
     end
   end
   
-  # GET /shop/:category_handle/:product_handle
-  # GET /shop/:category_handle/:product_handle.js
-  # GET /shop/:category_handle/:product_handle.xml
-  # GET /shop/:category_handle/:product_handle.json               AJAX and HTML
+  # GET /shop/:category_handle/:handle
+  # GET /shop/:category_handle/:handle.js
+  # GET /shop/:category_handle/:handle.xml
+  # GET /shop/:category_handle/:handle.json                       AJAX and HTML
   #----------------------------------------------------------------------------
   def show
     @shop_product = ShopProduct.find(:first, :conditions => ['LOWER(handle) = ?', params[:handle]])
@@ -38,7 +38,7 @@ class Shop::ProductsController < ApplicationController
     unless @shop_product.nil?
       @title = @shop_product.title
       @radiant_layout = @shop_product.layout
-
+      
       respond_to do |format|
         format.html { render }
         format.js { render :partial => '/shop/products/product', :locals => { :product => @shop_product } }
