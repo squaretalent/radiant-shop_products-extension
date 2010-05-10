@@ -41,6 +41,12 @@ describe Shop::ProductsController do
       
       response.should render_template('site/not_found')
     end
+    
+    it "should find a product by handle" do
+      get :show, :handle => @shop_product.handle
+      
+      response.should be_success
+    end
   end
   
 end
