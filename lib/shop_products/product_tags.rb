@@ -4,7 +4,7 @@ module ShopProducts
     include ActionView::Helpers::NumberHelper
   
     class ShopProductTagError < StandardError; end
-    
+        
     tag 'shop:products' do |tag|
       tag.expand
     end
@@ -111,7 +111,7 @@ module ShopProducts
     end
   
   protected
-
+  
     def find_shop_product(tag)
       if tag.locals.shop_product
         tag.locals.shop_product

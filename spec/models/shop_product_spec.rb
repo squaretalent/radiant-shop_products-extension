@@ -15,9 +15,7 @@ describe ShopProduct do
     @shop_product.layout.should eql(@shop_category.product_layout)
   end
   
-  it "should return all assets minus itself for assets_available" do
-    puts "todo"
-  end
+  it "should return all assets minus itself for assets_available"
   
   it "should generate a shop.url_prefix based url" do
     @shop_product.slug.should eql(@shop_product.slug_prefix + '/' + @shop_product.category.handle + '/' + @shop_product.handle)
