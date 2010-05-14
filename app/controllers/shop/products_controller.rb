@@ -10,6 +10,8 @@ class Shop::ProductsController < ApplicationController
   # GET /shop/search/:query.json                                  AJAX and HTML
   #----------------------------------------------------------------------------
   def index
+    before_filter { |c| c.include_stylesheet 'admin/extensions/shop/products/products' }
+    before_filter { |c| c.include_javascript 'admin/pagefactory' }
     @shop_products = ShopProduct.search(params[:query])
     
     unless @shop_products.empty?

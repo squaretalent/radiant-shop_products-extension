@@ -3,8 +3,9 @@
     - product.product_title_cell do
       %td.page{ :style => 'padding-left: 32px;' }
         %a{ :href => edit_admin_shop_product_path(node), :title => node.title}
-          %span.image
-            %img{:src => node.images.first.asset.thumbnail(:icon), :class => 'icon'}
+          - unless node.images.empty?
+            %span.image
+              %img{:src => node.images.first.asset.thumbnail(:icon), :class => 'icon'}
         %a{ :href => edit_admin_shop_product_path(node), :title => node.title}
           %span.title= node.title
     - product.product_description_cell do
