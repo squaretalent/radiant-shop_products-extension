@@ -2,21 +2,10 @@
 
 .outset
   = render_region :top
-  %table#products_map.index{:summary=>"Shop Categories created for the site"}
-    %thead
-      %tr
-        - render_region :thead do |thead|
-          - thead.title_header do
-            %th.page= t('category') 
-          - thead.description_header do
-            %th.description= t('description')
-          - thead.modify_header do
-            %th.modify{:colspan=>'2'}= t('modify')
-      %tbody
-        - if @shop_categories.empty?
-          %tr
-            %td.empty{:colspan => admin.products.index.thead.length}= t('no_categories')
-        - else
-          = render :partial => '/admin/shop/categories/node', :collection => @shop_categories
+
+  #products_map
+    %ul#shop_categories
+      = render :partial => '/admin/shop/categories/node', :collection => @shop_categories
+
   #actions
     = render 'bottom'

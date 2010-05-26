@@ -1,14 +1,16 @@
-%tr.node.page.level_0{:id => "shop_category_#{node.id}"}
-  - render_region :category do |category|  
-    - category.category_title_cell do
-      %td.page
-        %a{ :href => edit_admin_shop_category_path(node), :title => node.title}
-          %span.title= node.title
-    - category.category_description_cell do
-      %td.description= node.description
-    - category.category_add_product_cell do
-      %td.add_child= link_to t('add_product'), admin_shop_category_new_product_url(node)
-    - category.category_remove_cell do
-      %td.remove= link_to t('remove'), remove_admin_shop_category_url(node)
-    - category.category_product_row do 
-      = render :partial => '/admin/shop/products/node', :collection => node.products
+%li.category{:id => "shop_category_#{node.id}", :'data-id' => node.id }
+  .attributes
+    %span.handle
+    - render_region :category_attributes do |category|
+      - category.category_title do
+        %span.title= link_to node.title, edit_admin_shop_category_path(node)
+      - category.category_description do
+        %span.sku= "(#{node.handle})"
+      - category.category_modify do
+        .modify
+          %span.add_child= link_to t('add_product'), admin_shop_category_new_product_url(node)
+          %span.remove= link_to t('remove'), remove_admin_shop_category_url(node)
+  - render_region :category_products do |category|
+    - category.category_products do
+      %ul.products{:id => "shop_category_#{node.id}_products", :'data-id' => node.id}
+        = render :partial => '/admin/shop/products/node', :collection => node.products

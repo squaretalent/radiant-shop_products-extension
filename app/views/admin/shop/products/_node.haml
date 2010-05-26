@@ -1,15 +1,12 @@
-%tr.node.page.level_2{:id => "shop_product_#{node.id}"}
-  - render_region :product do |product|
-    - product.product_title_cell do
-      %td.page{ :style => 'padding-left: 32px;' }
+%li.product{:id => "shop_product_#{node.id}", :'data-id' => node.id}
+  .attributes
+    %span.handle
+    - render_region :product do |product|
+      - product.product_title do
         %a{ :href => edit_admin_shop_product_path(node), :title => node.title}
           - unless node.images.empty?
-            %span.image
-              %img{:src => node.images.first.asset.thumbnail(:icon), :class => 'icon'}
-        %a{ :href => edit_admin_shop_product_path(node), :title => node.title}
-          %span.title= node.title
-    - product.product_description_cell do
-      %td.description{:colspan => 2}
-        - #empty
-    - product.product_remove_cell do
-      %td.remove= link_to t('remove'), remove_admin_shop_product_url(node)
+            %img{:src => node.images.first.asset.thumbnail(:icon), :class => 'icon'}
+        %span.title= link_to node.title, edit_admin_shop_product_path(node)
+      - product.product_modify do
+        .modify
+          %span.remove= link_to t('remove'), remove_admin_shop_product_url(node)

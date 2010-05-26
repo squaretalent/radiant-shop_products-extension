@@ -15,7 +15,7 @@ module ShopProducts
         end
         
         def slug_prefix
-          @prefix = Radiant::Config['shop.url_prefix'] == '' ? '' : '/' + Radiant::Config['shop.url_prefix']
+          Radiant::Config['shop.url_prefix']
         end
       end
     end

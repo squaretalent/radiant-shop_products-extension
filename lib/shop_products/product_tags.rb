@@ -4,7 +4,17 @@ module ShopProducts
     include ActionView::Helpers::NumberHelper
   
     class ShopProductTagError < StandardError; end
-        
+    
+    desc %{ expands if there are products within the context }
+    tag 'shop:if_products' do |tag|
+      tag.expand unless find_shop_products(tag).empty?
+    end
+    
+    desc %{ expands if there are not products within the context }
+    tag 'shop:unless_products' do |tag|
+      tag.expand if find_shop_products(tag).empty?
+    end
+    
     tag 'shop:products' do |tag|
       tag.expand
     end
@@ -39,7 +49,7 @@ module ShopProducts
     desc %{ outputs the description to the products generated page }
     tag "shop:product:description" do |tag|
       unless tag.locals.shop_product.nil?
-        TextileFilter.filter(tag.locals.shop_product.description)
+        parse(TextileFilter.filter(tag.locals.shop_product.description))
       end
     end
   
@@ -75,6 +85,16 @@ module ShopProducts
                          :delimiter => attr[:delimiter] || ",")
     end
   
+    desc %{ expands if the product has a valid image }
+    tag 'shop:product:if_images' do |tag|
+      tag.expand unless find_shop_product_image(tag).nil?
+    end
+    
+    desc %{ expands if the product does not have a valid image }
+    tag 'shop:product:unless_images' do |tag|
+      tag.expand if find_shop_product_image(tag).nil?
+    end
+  
     tag 'shop:product:images' do |tag|
       tag.expand
     end
@@ -85,7 +105,7 @@ module ShopProducts
       product = find_shop_product(tag)
     
       product.images.each do |image|
-        tag.locals.shop_product_image = image.asset
+        tag.locals.shop_product_image = image
         content << tag.expand
       end
       content
@@ -95,12 +115,12 @@ module ShopProducts
     tag 'shop:product:image' do |tag|
       attrs = tag.attr.symbolize_keys
       image = find_shop_product_image(tag)
-    
+      tag.locals.shop_product_image = image
+      
       style = attrs[:style] || 'original'
     
       image.thumbnail(style.to_sym) if image
     end
-  
   
     [:id, :position].each do |symbol|
       desc %{ output the #{symbol}  about a product image}
@@ -110,23 +130,7 @@ module ShopProducts
       end
     end
   
-  protected
-  
-    def find_shop_product(tag)
-      if tag.locals.shop_product
-        tag.locals.shop_product
-      elsif tag.attr['id']
-        ShopProduct.find(tag.attr['id'])
-      elsif tag.attr['handle']
-        ShopProduct.find(:first, :conditions => {:handle => tag.attr['handle']})
-      elsif tag.attr['title']
-        ShopProduct.find(:first, :conditions => {:title => tag.attr['title']})
-      elsif tag.attr['position']
-        ShopProduct.find(:first, :conditions => {:position => tag.attr['position']})
-      else
-        ShopProduct.find(:first, :conditions => {:handle => tag.locals.page.slug})
-      end
-    end
+  protected  
   
     def find_shop_products(tag)
       if @shop_products
@@ -140,22 +144,43 @@ module ShopProducts
       end
     end
   
+    def find_shop_product(tag)
+      if tag.locals.shop_product
+        tag.locals.shop_product
+      elsif tag.attr['id']
+        ShopProduct.find(tag.attr['id'])
+      elsif tag.attr['handle']
+        ShopProduct.find(:first, :conditions => {:handle => tag.attr['handle']})
+      elsif tag.attr['title']
+        ShopProduct.find(:first, :conditions => {:title => tag.attr['title']})
+      elsif tag.attr['position']
+        ShopProduct.find(:first, :conditions => {:position => tag.attr['position']})
+      elsif !ShopProduct.all.empty?
+        ShopProduct.find(:first, :conditions => {:handle => tag.locals.page.slug})
+      else
+        nil
+      end
+    end
+  
     def find_shop_product_image(tag)
       if tag.locals.shop_product_image
-        tag.locals.shop_product_image
+        image = tag.locals.shop_product_image
       elsif tag.attr['id']
-        tag.locals.shop_product.images.find(tag.attr['id'])
+        image = tag.locals.shop_product.images.find(tag.attr['id'])
       elsif tag.attr['title']
-        tag.locals.shop_product.images.find(:first, :conditions => {:title => tag.attr['title']})
+        image = tag.locals.shop_product.images.find(:first, :conditions => {:title => tag.attr['title']})
       elsif tag.attr['position']
         image = tag.locals.shop_product.images.find(:first, :conditions => {:position => tag.attr['position']})
-      
-        if image
-          image.asset
-        else
-          nil
-        end
+      else
+        image = tag.locals.shop_product.images.first
       end
+      
+      result = nil
+      unless image.nil?
+        result = image.asset unless image.asset.nil?
+      end
+      
+      result
     end
 
   end

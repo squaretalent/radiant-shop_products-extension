@@ -20,8 +20,9 @@ module ShopProducts
               index.top
               index.bottom.concat %w{ add_category }
               index.thead.concat %w{ title_header description_header modify_header }
-              index.category.concat %w{ category_title_cell category_description_cell category_add_product_cell category_remove_cell category_product_row }
-              index.product.concat %w{ product_title_cell product_description_cell product_remove_cell }
+              index.category_attributes.concat %w{ category_title category_description category_modify }
+              index.category_products.concat %w{ category_products }
+              index.product.concat %w{ product_title product_modify }
             end
             products.remove = products.index
           end

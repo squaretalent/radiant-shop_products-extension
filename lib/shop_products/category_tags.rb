@@ -5,6 +5,16 @@ module ShopProducts
   
     class ShopCategoryTagError < StandardError; end
 
+    desc %{ expands if there are shop categories within the context }
+    tag 'shop:if_categories' do |tag|
+      tag.expand unless find_shop_categories(tag).empty?
+    end
+
+    desc %{ expands if there are not shop categories within the context }
+    tag 'shop:unless_categories' do |tag|
+      tag.expand if find_shop_categories(tag).empty?
+    end
+    
     tag 'shop:categories' do |tag|
       tag.expand
     end
@@ -12,7 +22,7 @@ module ShopProducts
     desc %{ iterates through each product category }
     tag 'shop:categories:each' do |tag|
       content = ''
-      categories = ShopCategory.all(:order => 'position DESC')
+      categories = find_shop_categories(tag)
     
       categories.each do |category|
         tag.locals.shop_category = category
@@ -56,21 +66,17 @@ module ShopProducts
       text = tag.double? ? tag.expand : tag.render('title')
       %{<a href="#{category.slug}" #{attributes}>#{text}</a>}
     end
-    
-    desc %{ runs if the curent category has products }
-    tag 'shop:category:if_products' do |tag|
-      category = find_shop_category(tag)
-      tag.expand if category && !category.products.empty?
-    end
-  
-    desc %{ runs if the current category has no products }
-    tag 'shop:category:unless_products' do |tag|
-      category = find_shop_category(tag)
-      tag.expand if !category || category.products.empty?
-    end
   
   protected
-
+  
+    def find_shop_categories(tag)
+      if params[:query]
+        ShopCategory.search(params[:query])
+      else
+        ShopCategory.all
+      end
+    end
+  
     def find_shop_category(tag)
       if tag.locals.shop_category
         tag.locals.shop_category
@@ -84,8 +90,10 @@ module ShopProducts
         ShopCategory.find(:first, :conditions => {:title => tag.attr['title']})
       elsif tag.attr['position']
         ShopCategory.find(:first, :conditions => {:position => tag.attr['position']})
-      else
+      elsif !ShopCategory.all.empty?
         ShopCategory.find(:first, :conditions => {:handle => tag.locals.page.slug})
+      else
+        nil
       end
     end
 

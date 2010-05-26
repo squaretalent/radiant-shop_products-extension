@@ -6,9 +6,9 @@ module ShopProducts
           self.custom_layout = Radiant::Config['shop.category_layout'] if self.custom_layout.nil?
           self.custom_product_layout = Radiant::Config['shop.product_layout'] if self.custom_product_layout.nil?
         end
-      
+        
         def slug
-          "/shop/#{handle}"
+          self.slug_prefix + '/' + self.handle
         end
       
         def layout
@@ -17,6 +17,10 @@ module ShopProducts
       
         def product_layout
           custom_product_layout
+        end
+
+        def slug_prefix
+          Radiant::Config['shop.url_prefix']
         end
       end
     end

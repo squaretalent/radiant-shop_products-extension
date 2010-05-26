@@ -13,6 +13,17 @@ module ShopProducts
           @parts ||= []
           @parts << {:title => 'description'}
         end
+        
+        def sort
+          @categories = CGI::parse(params[:categories])["shop_categories[]"]
+          @categories.each_with_index do |id, index|
+            ShopCategory.find(id).update_attributes({
+              :position => index+1
+            })
+          end
+          
+          render :text => @products.to_s
+        end
       end
     end
   end

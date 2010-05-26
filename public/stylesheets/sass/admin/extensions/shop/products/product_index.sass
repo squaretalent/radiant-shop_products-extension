@@ -1,0 +1,119 @@
+!line_height            = 18px
+
+#products_map
+  :border
+    :top                  21px #9e9e9e solid
+
+  .category
+    :position             relative
+    :width                100%
+    :min
+      :height           = !line_height*2
+    :line
+      :height           = !line_height*2
+      
+    .attributes
+      :padding
+        :left             5px
+      :border
+        :bottom           1px solid #cecece
+
+      &:hover
+        :background
+          :color          #e0f0ff        
+        
+      .handle
+        :float            left
+        :display          block
+        :width            24px
+        :height           24px
+        :margin 
+          :top            6px
+          :right          5px
+        :background       
+          :image          none
+          :repeat         no-repeat
+          :position       50% 50%
+        :cursor           move
+
+      &:hover
+
+        .handle
+          :background
+            :image        url(/images/admin/extensions/shop/products/sort.png)
+
+      .title, .title a
+        :color            black
+        :font
+          :weight         bold
+          :size           16px
+        :text
+          :decoration     none
+        
+        &:hover
+          :color          #0066ce
+          :text
+            :decoration   underline
+      
+      .sku
+        :font
+          :style          italic
+          :size           0.9em
+            
+      .modify
+        :float            right
+        :width            200px
+        :text
+          :align          right
+        :font
+          :size           10px
+          
+        a
+          :color          black
+          :text
+            :decoration   none
+            
+        span
+          :padding
+            :left         15px
+            :right        15px
+            
+        .add_child
+          :background     url(/images/admin/plus.png) no-repeat 0 50%
+      
+        .remove
+          :background     url(/images/admin/minus.png) no-repeat 0 50%
+
+    .products
+      :position           relative
+      :min
+        :height           1px
+
+  .product
+    :position             relative
+    :height               45px
+    :line
+      :height             45px
+    :margin
+      :bottom             1px
+      
+    .attributes
+      :padding
+        :left             30px
+        
+      .handle      
+        :margin 
+          :top            11px
+
+      .title
+      
+        a
+          :font
+            :size         15px
+            :weight       normal
+      
+      .icon
+        :float            left
+        :margin           5px
+          :left           0
+        :height           35px
