@@ -1,22 +1,24 @@
-var ShopProductAssets = {};
+var ShopProductAssets = {}
 
 document.observe("dom:loaded", function() {
-  shop = new Shop();
-  shop.ProductInitialize();
+  shop = new Shop()
+  shop.ProductInitialize()
   
   Event.addBehavior({
-    '#asset_popup_close:click' : function(e) { shop.ProductAssetClear(); },
-    '#asset_form:submit' : function(e) { shop.ProductAssetSubmit(); },
+    '#image_browse_popup_close:click' : function(e) { shop.ImageClose() },
+    '#image_form_popup_close:click' : function(e) { shop.ImageClose() },
     
-    '#assets_list .asset:click' : function(e) { shop.ProductImageCreate($(this)); },
-    '#images_list .image .actions .delete:click' : function(e) { shop.ProductImageDestroy($(this).up('.image'))}
-  });
-});
+    '#image_form:submit' : function(e) { shop.ImageSubmit() },
+    
+    '#image_browse_popup .image:click' : function(e) { shop.ProductImageCreate($(this)) },
+    '#product_images_list .delete:click' : function(e) { shop.ProductImageDestroy($(this).up('.image')) }
+  })
+})
 
 ShopProductAssets.List = Behavior.create({
   
   onclick: function() { 
-    shop.ProductImageCreate(this.element);
+    shop.ProductImageCreate(this.element)
   }
   
 });
@@ -25,47 +27,47 @@ var Shop = Class.create({
   
   ProductInitialize: function() {
     if($('shop_product_id')) {
-      this.ProductImagesSort();
+      this.ProductImagesSort()
     }
   },
   
   ProductImagesSort: function() {
-    Sortable.create('images_list', {
+    Sortable.create('product_images_list', {
       constraint: false, 
       overlap: 'horizontal',
-      containment: ['images_list'],
+      containment: ['product_images_list'],
       onUpdate: function(element) {
-        new Ajax.Request(urlify($('admin_shop_product_images_sort_path').value), {
+        new Ajax.Request(urlify($('admin_shop_product_sort_images_path').value), {
           method: 'put',
           parameters: {
             'product_id': $('shop_product_id').value,
-            'images':Sortable.serialize('images_list')
+            'product_images':Sortable.serialize('product_images_list')
           }
         });
       }.bind(this)
-    });
+    })
   },
   
   ProductImageCreate: function(element) {
-    showStatus('Adding Image...');
-    element.hide();
+    showStatus('Adding Image...')
+    element.hide()
     new Ajax.Request(urlify($('admin_shop_product_images_path').value), {
       method: 'post',
       parameters: {
         'product_id' : $('shop_product_id').value,
-        'shop_product_image[asset_id]' : element.getAttribute('data-id')
+        'shop_product_image[image_id]' : element.getAttribute('data-image_id')
       },
       onSuccess: function(data) {
         // Insert item into list, re-call events
-        $('images_list').insert({ 'bottom' : data.responseText});
-        shop.ProductImagesSort();
+        $('product_images_list').insert({ 'bottom' : data.responseText})
+        shop.ProductImagesSort()
         
-        element.remove();
-        hideStatus();
+        element.remove()
+        hideStatus()
       }.bind(element),
       onFailure: function() {
-        element.show();
-        hideStatus();
+        element.show()
+        hideStatus()
       }
     });
   },
@@ -73,12 +75,12 @@ var Shop = Class.create({
   ProductImageDestroy: function(element) {
     showStatus('Removing Image...');
     element.hide();
-    new Ajax.Request(urlify($('admin_shop_product_images_path').value, element.readAttribute('data-id')), { 
+    new Ajax.Request(urlify($('admin_shop_product_images_path').value, element.readAttribute('data-product_image_id')), { 
       method: 'delete',
       onSuccess: function(data) {
-        $('assets_list').insert({ 'bottom' : data.responseText });
-        element.remove();
-        hideStatus();
+        $('images_list').insert({ 'bottom' : data.responseText })
+        element.remove()
+        hideStatus()
       }.bind(this),
       onFailure: function(data) {
         element.show();
@@ -87,8 +89,8 @@ var Shop = Class.create({
     });
   },
   
-  ProductAssetSubmit: function() {
-    showStatus('Uploading Image...');
+  ImageSubmit: function() {
+    showStatus('Uploading Image...')
   },
   
   ProductAssetCreate: function() {
@@ -101,23 +103,24 @@ var Shop = Class.create({
     return null;
   },
   
-  ProductAssetClear: function() {
-    Element.closePopup('asset_popup');
+  ImageClose: function() {
+    Element.closePopup('image_form_popup')
+    Element.closePopup('image_browse_popup')
     
-    $$('#asset_form .clearable').each(function(input) {
-      input.value = '';
-    });
+    $$('#image_browse_form .clearable').each(function(input) {
+      input.value = ''
+    })
   }
   
-});
+})
 
 function urlify(route, id) {
-  var url = route;
+  var url = route
   if ( id !== undefined ) {
     url += '/' + id
   }
   
-  url += '.js?' + new Date().getTime();
+  url += '.js?' + new Date().getTime()
   
-  return url;
+  return url
 }

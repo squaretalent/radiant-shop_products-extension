@@ -8,7 +8,7 @@ module ShopProducts
         end
         
         def slug
-          self.slug_prefix + '/' + self.handle
+          '/' + self.slug_prefix + '/' + self.handle
         end
       
         def layout

@@ -15,8 +15,8 @@
     .drawer
       .drawer_contents#attributes
         %table.fieldset
-          = render :partial => 'meta_row', :collection => @meta, :locals => { :f => fields }
-          = render :partial => 'meta_row_category', :locals => { :f => fields }
+          - @meta.each do |meta|
+            = render :partial => 'admin/shop/products/meta/' + meta, :locals => { :f => fields }
           = render_region :extended_metadata, :locals => { :f => fields }
       .drawer_handle
         %a.toggle{:href=>'#attributes', :rel=>"toggle[attributes]", :class=>"#{(meta_errors? ? 'less' : 'more')}"}= meta_label
@@ -28,7 +28,6 @@
       #pages.pages
         = hidden_field_tag 'page_part_index_field' #important
         = render :partial => 'part', :collection => @parts
-        
     
 - render_region :form_bottom do |form_bottom|
   - form_bottom.edit_buttons do
@@ -40,10 +39,9 @@
       = t('or')
       = link_to t('cancel'), admin_shop_products_url
   - form_bottom.edit_timestamp do
-    =# updated_stamp @shop_product
+    = updated_stamp @shop_product
     
 #routes{:style => 'display:none'}
 
-  = hidden_field_tag 'admin_shop_product_assets_path', admin_shop_product_assets_path(@shop_product)
   = hidden_field_tag 'admin_shop_product_images_path', admin_shop_product_images_path(@shop_product)
-  = hidden_field_tag 'admin_shop_product_images_sort_path', admin_shop_product_images_sort_path(@shop_product)
+  = hidden_field_tag 'admin_shop_product_sort_images_path', admin_shop_product_sort_images_path(@shop_product)

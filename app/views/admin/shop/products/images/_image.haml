@@ -1,0 +1,12 @@
+- @image_id = image.class.to_s == "Image" ? image.id : image.image_id
+- @product_image_id = image.class.to_s == "Image" ? nil : image.id
+- @id = image.class.to_s == "Image" ? "image" : "product_image"
+
+%li.image{:id => "#{@id}_#{image.id}", :'data-image_id' => @image_id, :'data-product_image_id' => @product_image_id }
+  .wrapper
+    %span.buffer
+    = image_tag image.url(:preview)
+  %span.title= truncate(image.title, 30, '...')
+  %span.caption= image.caption
+  .actions
+    %span.delete

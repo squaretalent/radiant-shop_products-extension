@@ -41,8 +41,8 @@ var Shop = Class.create({
       categories[i] = $(el).id + '_products'
     })
     
-    categories.each(function(id) { 
-      Sortable.create(id, {
+    categories.each(function(category) { 
+      Sortable.create(category, {
         overlap: 'vertical',
         only: 'product',
         handle: 'handle',
@@ -53,8 +53,8 @@ var Shop = Class.create({
           new Ajax.Request('/admin/shop/products/sort', {
             method: 'put',
             parameters: {
-              'category_id': $(id).readAttribute('data-id'),
-              'products':Sortable.serialize(id)
+              'category_id': $(category).readAttribute('data-id'),
+              'products':Sortable.serialize(category)
             }
           })
         }.bind(this)

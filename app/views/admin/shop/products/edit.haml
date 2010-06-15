@@ -2,7 +2,9 @@
 
 - render_region :main do |main|
   - main.edit_header do
-    %h1= t('edit_product')    
+    %h1
+      = t('edit_product')
+      = render 'admin/shop/products/images/head'
   - main.edit_form do
     - form_for :shop_product, @shop_product, :url => admin_shop_product_path(@shop_product), :html => {:method => :put, :multipart => true, :id => 'edit_shop_product', 'data-onsubmit_status'=>"Saving Changes&#8230;"} do |f|
       = f.hidden_field :id
@@ -10,6 +12,3 @@
   - main.edit_popups do
     #popups
       = render 'popup'
-- render_region :sidebar do |sidebar|
-  #sidebar
-    = render 'sidebar'

@@ -1,0 +1,19 @@
+%h3.title Upload New Image
+.popup_content
+  - form_for :image, :url => admin_images_path(:format => 'js'), :html => { :method => "post", :multipart => true, :target => 'image_frame', :id => 'image_form' } do |f|
+    %ol
+      %li.image_title
+        = f.label :title, t('name')
+        = f.text_field :title, :class => 'clearable'
+      %li.image_caption
+        = f.label :caption, t('caption')
+        = f.text_field :caption, :class => 'clearable'
+      %li.image_file
+        = f.file_field :asset, :class => 'clearable'
+    
+      %li.image_submit
+        = f.submit 'Create'
+  
+    %iframe#image_frame{ :name => 'image_frame', :src => 'about:blank' }
+
+  %a#image_form_popup_close{ :href => '#image_form_popup' } Close

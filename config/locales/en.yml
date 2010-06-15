@@ -24,7 +24,7 @@ en:
   images: 'Images'
   no_images: 'No Images'
   add_image: 'Add Image'
-  new_image: 'New Image'
+  browse_images: 'Browse Images'
   caption: 'Caption'
   price: 'Price'
   sku: 'SKU'
